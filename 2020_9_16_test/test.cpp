@@ -49,16 +49,56 @@ long Add(long a, long b)
 	return a + b;
 }
 
+void fun(int a = 10)
+{
+	cout << "123!" << endl;
+}
+
+//void fun(int a)
+//{
+//	cout << "321!" << endl;
+//}
+
+void Swap(int &x, int &y)
+{
+	int tmp = x;
+	x = y;
+	y = tmp;
+}
+
 
 int main()
 {
-	int ret1 = Add(10, 20);
-	cout << "int : a + b = " << ret1 << endl;
-	double ret2 = Add(1.2, 2.4);
-	cout << "double : a + b = " << ret2 << endl;
-	int ret3 = Add(10L, 20L);
-	cout << "long : a + b = " << ret3 << endl;
-	printf("'1' + '2' = %d\n",Add('1', '2'));//char和int存在隐式类型转换,所以会调用int Add
+	int a = 100;
+	int i = a++;
+	printf("%d\n", i);
+	cout << a << endl; 
+
+
+	//int a = 10;
+	//int b = 20;
+	//int &ra = a;
+	//int &rb = b;
+	//Swap(ra, rb);
+	//Swap(a, b);
+	//double a = 12.34;
+	//const int &ra = a;
+	//a = 34.56;
+	//cout << ra << endl;//ra = 12
+	//int a = 10;
+	//int b = 20;
+	//int &ra = a;
+	//ra = b; //b的值赋给了ra
+
+	//fun(1);
+	//int ret1 = Add(10, 20);
+	//cout << "int : a + b = " << ret1 << endl;
+	//double ret2 = Add(1.2, 2.4);
+	//cout << "double : a + b = " << ret2 << endl;
+	//int ret3 = Add(10L, 20L);
+	//cout << "long : a + b = " << ret3 << endl;
+	//printf("'1' + '2' = %d\n",Add('1', '2'));
+	//char和int存在隐式类型转换,所以会调用int Add
 	
 	//TestFunc();
 	//TestFunc(1);
