@@ -1,4 +1,9 @@
-//int Add(int x, int y)
-//{
-//	return x + y;
-//}
+
+
+//注释之后，程序在链接时找不到该函数的实现，就会报错，从而可以观察到函数名的修饰
+/*
+int Add(int x, int y)
+{
+	return x + y;
+}
+*/
