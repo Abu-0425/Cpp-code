@@ -34,20 +34,20 @@ void TestFunc(int a, int b, int c)
 //1.参数个数不同 2.参数类型不同 3.参数次序不同
 //注意：如果仅仅是函数返回值类型不同，则不能构成函数重载
 
-double Add(double a, double b)
-{
-	return a + b;
-}
-
-int Add(int a, int b)
-{
-	return a + b;
-}
-
-long Add(long a, long b)
-{
-	return a + b;
-}
+//double Add(double a, double b)
+//{
+//	return a + b;
+//}
+//
+//int Add(int a, int b)
+//{
+//	return a + b;
+//}
+//
+//long Add(long a, long b)
+//{
+//	return a + b;
+//}
 
 void fun(int a = 10)
 {
@@ -66,15 +66,24 @@ void Swap(int &x, int &y)
 	y = tmp;
 }
 
+int &Add(int x, int y)
+{
+	int ret = x + y;
+	return ret;
+}
 
 int main()
 {
-	int a = 100;
-	int i = a++;
-	printf("%d\n", i);
-	cout << a << endl; 
-
-
+	int &result = Add(1, 2);
+	cout << result << endl;
+	Add(3, 4);
+	cout << result << endl;
+	Add(5, 6);
+	cout << result << endl;
+	//int a = 100;
+	//int i = a++;
+	//printf("%d\n", i);
+	//cout << a << endl; 
 	//int a = 10;
 	//int b = 20;
 	//int &ra = a;
