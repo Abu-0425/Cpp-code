@@ -2,6 +2,8 @@
 #include <vector>
 using namespace std;
 
+#pragma warning(disable:4996)
+
 class Data{
 public:
 	Data(int data = 10) : _data(data) {}
@@ -102,6 +104,26 @@ void TestVector6()
 	cout << *it << endl;
 }
 
+void printYang(int row)
+{
+	vector<vector<int>> yang;
+	for (int i = 0; i < row; i++) {
+		yang.push_back(vector<int>(i + 1, 1));
+	}
+
+	for (int i = 0; i < row; i++) {
+		for (int j = 1; j < i; j++) {
+			yang[i][j] = yang[i - 1][j - 1] + yang[i - 1][j];
+		}
+	}
+
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j <= i; j++) {
+			printf("%d ", yang[i][j]);
+		}
+		printf("\n");
+	}
+}
 
 int main()
 {
@@ -110,7 +132,11 @@ int main()
 	//TestVector3();
 	//TestVector4();
 	//TestVector5();
-	TestVector6();
+	//TestVector6();
+	int row;
+	printf("你想要打印几行的杨辉三角 : \n");
+	scanf("%d", &row);
+	printYang(row);
 
 	system("pause");
 	return 0;
