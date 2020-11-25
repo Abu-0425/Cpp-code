@@ -4,6 +4,41 @@
 #include <algorithm>
 using namespace std;
 
+//找出最长的数字串
+int main()
+{
+	string s = "";
+	getline(cin, s);
+	int n = s.size();
+	int sub_len = 0; //目标子串的长度
+	int sub_index = 0; //目标子串的起始下标
+	int tmp_len = 0; //临时子串的长度
+	int tmp_index = 0; //临时子串的起始下标
+	for (int i = 0; i < n; i++) {
+		while (i < n && (s[i] >= '0' && s[i] <= '9')) {
+			tmp_len++;
+			if (tmp_len == 1) {
+				tmp_index = i;
+			}
+			i++;
+		}
+		if (sub_len < tmp_len) {
+			// 更新信息
+			sub_len = tmp_len;
+			sub_index = tmp_index;
+		}
+		// 更新临时子串的长度
+		tmp_len = 0;
+	}
+	//截取目标子串
+	string sub_string = s.substr(sub_index, sub_len);
+	cout << sub_string << endl;
+	return 0;
+}
+
+
+#if 0 
+//排序子序列
 int main()
 {
 	int n = 0;
@@ -34,6 +69,7 @@ int main()
 
 	return 0;
 }
+#endif
 
 
 #if 0
