@@ -4,7 +4,61 @@
 #include <algorithm>
 using namespace std;
 
-//找出最长的数字串
+
+//十进制转任意进制
+int main()
+{
+	int M, N;
+	cin >> M >> N;
+	string s = "ABCDEF"; //用于大于十进制数的存储
+	if(N == 10 || M == 0) {
+		cout << M << endl;
+		return 0;
+	}
+	//负数情况
+	if(M < 0) {
+		M = - M;
+		cout << "-";
+	}
+	string retStr;
+	while(M) {
+		int rem = M % N; //余数
+		if(rem >= 10) {
+			retStr.push_back(s[rem - 10]);
+		}
+		else {
+			retStr.push_back(rem + '0');
+		}
+		M /= N; //更新M，继续求余
+	}
+	//结果应反转
+	reverse(retStr.begin(), retStr.end());
+	cout << retStr << endl;
+
+	return 0;
+}
+
+#if 0
+int main()
+{
+	int A, B, C = 0;
+	int n1, n2, n3, n4 = 0;
+	cin >> n1 >> n2 >> n3 >> n4;
+	A = (n1 + n3) / 2;
+	B = -(n1 - n3) / 2;
+	C = -(n2 - n4) / 2;
+	if ((n1 == A - B) && (n2 == B - C) && (n3 == A + B) && (n4 == B + C)) {
+		cout << A << " " << B << " " << C << endl;
+	}
+	else {
+		cout << "No" << endl;
+	}
+
+	return 0;
+}
+#endif
+
+#if 0
 int main()
 {
 	string s = "";
@@ -35,6 +89,7 @@ int main()
 	cout << sub_string << endl;
 	return 0;
 }
+#endif
 
 
 #if 0 
