@@ -5,9 +5,48 @@
 using namespace std;
 
 
+
+#if 0
+//判断将回文串B插入至回文串A中仍然回文有几种办法
+bool isHui(string &s)
+{
+	int n = s.size();
+	int begin = 0, end = n - 1;
+	while (begin < end) {
+		if (s[begin] != s[end]) {
+			return false;
+		}
+		begin++;
+		end--;
+	}
+	return true;
+}
+
+int main()
+{
+	string A, B;
+	cin >> A >> B;
+	int n = A.size();
+	int count = 0;
+	string tmp(A);
+	for (int i = 0; i < n; i++) {
+		tmp.insert(i, B);
+		if (isHui(tmp)) {
+			count++;
+		}
+		tmp = A;
+	}
+	cout << count << endl;
+
+	return 0;
+}
+#endif
+
+#if 0
 //十进制转任意进制
 int main()
 {
+
 	int M, N;
 	cin >> M >> N;
 	string s = "ABCDEF"; //用于大于十进制数的存储
@@ -37,6 +76,7 @@ int main()
 
 	return 0;
 }
+#endif
 
 #if 0
 int main()
