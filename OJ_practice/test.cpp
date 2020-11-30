@@ -4,6 +4,153 @@
 #include <algorithm>
 using namespace std;
 
+class Data{
+public:
+	Data() {}
+	Data(int n) : data(n) {}
+private:
+	int data;
+};
+
+template<class T> 
+class BigNumber{
+	long n;
+public:
+	BigNumber(T i) :n(i){}
+	BigNumber operator+(BigNumber b){
+		return BigNumber(n + b.n);
+	}
+};
+
+int main()
+{
+	BigNumber<long> d1(1), d2(2);
+	d1 + d2;
+	d1 + 3;
+	3 + 3;
+	//3 + d1;
+	//Data d[3] = {1, 2, 3};
+	//d[1] = 10;
+	//int arr[][4] = { { 1 }, { 3, 2 }, { 4, 5, 6 }, { 0 } };
+	//printf("%d\n", arr[1][2]);
+	return 0;
+}
+
+
+//数组中相加和为0的三元组
+class Solution {
+public:
+	vector<vector<int> > threeSum(vector<int> &num) {
+		vector<vector<int>> v;
+		int n = num.size();
+		if(n < 3) {
+			return v;
+		}
+		sort(num.begin(), num.end()); //排序
+		for(int i = 0; i < n - 2; i++) {
+			int front = i + 1;
+			int back = n - 1;
+			int add = -num[i]; //后俩者的目标和
+			while(front < back) {
+				if(num[front] + num[back] > add) {
+					back--; //back需往前移动寻找
+				} 
+				else if(num[front] + num[back] < add) {
+					front++; //front需往后移动查找
+				}
+				else {
+					//找到一组符合要求的数据，保存
+					vector<int> tmp = {num[i], num[front], num[back]};
+					v.push_back(tmp);
+					//去重
+					while(front+1 < back && num[front] == num[front+1]) {
+						front++;
+					}
+					while(back-1 > front && num[back] == num[back-1]) {
+						back--;
+					}
+					front++, back--;
+				}
+			}
+			//去重
+			while(i + 1 < n - 2 && num[i] == num[i+1]) {
+				i++;
+			}
+		}
+		return v;
+	}
+};
+
+#if 0
+//不要2！
+//分蛋糕问题
+int main()
+{
+	//遍历，用0表示当前位置可以放蛋糕，-1表示不能
+	vector<vector<int>> v;
+	int w, h = 0;
+	while (cin >> w >> h) {
+		v.resize(h);
+		for (int i = 0; i < h; i++) {
+			v[i].resize(w, 0); //初始化为全0
+		}
+		int count = 0;
+		for (int i = 0; i < h; i++) {
+			for (int j = 0; j < w; j++) {
+				//表示可以放蛋糕
+				if (v[i][j] == 0) {
+					count++;
+					//将欧几里得距离为2的点设为-1，表示不能放蛋糕
+					if (j - 2 >= 0) {
+						v[i][j - 2] = -1;
+					}
+					if (j + 2 <= w - 1) {
+						v[i][j + 2] = -1;
+					}
+					if (i - 2 >= 0) {
+						v[i - 2][j] = -1;
+					}
+					if (i + 2 <= h - 1) {
+						v[i + 2][j] = -1;
+					}
+				}
+			}
+		}
+		cout << count << endl;
+	}
+
+	return 0;
+}
+#endif
+
+/*将字符串转成整形*/
+class Solution1 {
+public:
+	int StrToInt(string str) {
+		int n = str.size();
+		int i = 0;
+		if (str[i] == '+') {
+			i++;
+		}
+		int flag = 1;
+		if (str[i] == '-') {
+			flag = -flag;
+			i++;
+		}
+		int res = 0;
+		while (i < n) {
+			if (isdigit(str[i])) {
+				res = res * 10 + flag * (str[i] - '0');
+			}
+			else {
+				return 0;
+			}
+			i++;
+		}
+		return res;
+	}
+};
+
 
 
 #if 0
