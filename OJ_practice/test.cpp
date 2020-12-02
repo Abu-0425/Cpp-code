@@ -1,41 +1,145 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <string.h>
 #include <algorithm>
 using namespace std;
 
-class Data{
-public:
-	Data() {}
-	Data(int n) : data(n) {}
-private:
-	int data;
-};
-
-template<class T> 
-class BigNumber{
-	long n;
-public:
-	BigNumber(T i) :n(i){}
-	BigNumber operator+(BigNumber b){
-		return BigNumber(n + b.n);
-	}
-};
+void func(char **m)
+{
+	++m;
+	cout << *m << endl; //afternoon
+}
 
 int main()
 {
-	BigNumber<long> d1(1), d2(2);
-	d1 + d2;
-	d1 + 3;
-	3 + 3;
-	//3 + d1;
-	//Data d[3] = {1, 2, 3};
-	//d[1] = 10;
-	//int arr[][4] = { { 1 }, { 3, 2 }, { 4, 5, 6 }, { 0 } };
-	//printf("%d\n", arr[1][2]);
+	static char *a[] = { "morning", "afternoon", "evening" }; 
+	char **p = a;
+	func(p);
 	return 0;
 }
 
+
+#if 0
+int findCount(int n, int m)
+{
+	if(n == 0 || m == 0) {
+		return 1;
+	}
+	else {
+		return findCount(n, m - 1) + findCount(n - 1, m);
+	}
+}
+
+int main()
+{
+	int n = 0, m = 0;
+	cin >> n;
+	cin >> m;
+	int res = findCount(n, m);
+	cout << res << endl;
+	return 0;
+}
+#endif
+
+#if 0
+//字符串是按照字典序排序还是按照长度排序(1,2,both,none)
+bool isDict(vector<string> &v)
+{
+	int n = v.size();
+	for (int i = 0; i < n - 1; i++) {
+		string s1 = v[i], s2 = v[i + 1];
+		if (strcmp(s1.c_str(), s2.c_str()) > 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool isLeng(vector<string> &v)
+{
+	int n = v.size();
+	for (int i = 0; i < n- 1; i++) {
+		if (v[i].size() > v[i + 1].size()) {
+			return false;
+		}
+	}
+	return true;
+}
+
+int main()
+{
+	int n = 0;
+	cin >> n;
+	if (n < 2) {
+		cout << "both" << endl;
+		return 0;
+	}
+	vector<string> v;
+	for (int i = 0; i < n; i++) {
+		string s = "";
+		cin >> s;
+		v.push_back(s);
+	}
+	if (isDict(v) && isLeng(v)) {
+		cout << "both" << endl;
+	}
+	else if (isDict(v)) {
+		cout << "lexicographically" << endl;
+	}
+	else if (isLeng(v)) {
+		cout << "lengths" << endl;
+	}
+	else {
+		cout << "none" << endl;
+	}
+	return 0;
+}
+#endif
+
+
+#if 0
+//链表区间反转[m, n]
+class Solution {
+public:
+	/**
+	*
+	* @param head ListNode类
+	* @param m int整型
+	* @param n int整型
+	* @return ListNode类
+	*/
+	ListNode* reverseBetween(ListNode* head, int m, int n) {
+		if (!head || head->next == nullptr) {
+			return head;
+		}
+		ListNode *p = head, *q = nullptr;
+		//记录q为前边不需要反转部分的最后一个节点
+		for (int i = 0; i < m - 1; i++) {
+			q = p;
+			p = p->next;
+		}
+		//此时p位于m的位置
+		ListNode *rend = p, *next = nullptr;
+		ListNode *prev = p;
+		p = p->next; //p先到下一个节点，开始反转
+		for (int i = m; i < n; i++) {
+			next = p->next;
+			p->next = prev;
+			prev = p;
+			p = next;
+		}
+		//此时p在n+1的位置
+		rend->next = p; //rend为反转后链表的尾
+		if (q) { //q不为nullptr则连接链表
+			q->next = prev;
+		}
+		else { //为nullptr则表示头结点就是目标链表的头
+			head = prev;
+		}
+		return head;
+	}
+};
 
 //数组中相加和为0的三元组
 class Solution {
@@ -80,6 +184,7 @@ public:
 		return v;
 	}
 };
+#endif
 
 #if 0
 //不要2！
