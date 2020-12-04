@@ -5,6 +5,196 @@
 #include <algorithm>
 using namespace std;
 
+
+
+
+#if 0
+//无穷大满二叉树的最近公共祖先(节点按照层序遍历依次编号(1,2,3,...))
+class LCA {
+public:
+	int getLCA(int a, int b) {
+		//分别存储俩个节点的祖先
+		vector<int> v1;
+		vector<int> v2;
+		while (a) {
+			v1.push_back(a);
+			a /= 2;
+		}
+		while (b) {
+			v2.push_back(b);
+			b /= 2;
+		}
+		int ret = 0;
+		int s1 = v1.size();
+		int s2 = v2.size();
+		int size = min(s1, s2); //较短数组的size
+		for (int i = size - 1; i >= 0; i--) {
+			//从较短数组的一个元素（较长数组的同一位置）开始比较
+			if (v1[s1 - 1 - i] == v2[s2 - 1 - i]) {
+				ret = v1[s1 - 1 - i];
+				break;
+			}
+		}
+		return ret;
+	}
+};
+
+//求连续最大bit数(byte型数据)
+int main()
+{
+	int a = 0; 
+	while(cin >> a) {
+		int count = 0;
+		for(int i = 0; i < 8; i++) {
+			int tmp = 0; //临时长度
+			while(i < 8 && (a & 0x1)) {
+				tmp++; //如果该比特位为1则记录临时长度并继续判断下一个比特位
+				a >>= 1;
+				i++;
+			}
+			count = max(tmp, count); //更新长度
+			a >>= 1; //a每次右移一位
+		}
+		cout << count << endl;
+	}
+	return 0;
+}
+#endif
+
+#if 0
+//密码安全等级判定
+int lengthSorce(string &s)
+{
+	int len = s.size();
+	int sorce = 0;
+	if(len >= 8) {
+		sorce = 25;
+	}
+	else if(len >= 5 && len <= 7) {
+		sorce = 10;
+	}
+	else {
+		sorce = 5;
+	}
+	return sorce;
+}
+
+int letterSorce(string &s)
+{
+	int len = s.size();
+	int sorce = 0;
+	bool lower = false, upper = false;
+	for (int i = 0; i < len; i++) {
+		if (islower(s[i])) {
+			lower = true;
+		}
+		if (isupper(s[i])) {
+			upper = true;
+		}
+	}
+	if (lower && upper) {
+		sorce = 20;
+	}
+	else if (lower || upper) {
+		sorce = 10;
+	}
+	else {
+		sorce = 0;
+	}
+	return sorce;
+}
+
+int numberSorce(string &s)
+{
+	int len = s.size();
+	int sorce = 0;
+	int count = 0;
+	for (int i = 0; i < len; i++) {
+		if (isdigit(s[i])) {
+			count++;
+		}
+	}
+	if (count > 1) {
+		sorce = 20;
+	}
+	else if (count == 1) {
+		sorce = 10;
+	}
+	else {
+		sorce = 0;
+	}
+	return sorce;
+}
+
+int symbolSorce(string &s)
+{
+	int len = s.size();
+	int sorce = 0;
+	int count = 0;
+	for (int i = 0; i < len; i++) {
+		if ((s[i] >= 0x21 && s[i] <= 0x2f) || (s[i] >= 0x3a && s[i] <= 0x40)
+			|| (s[i] >= 0x5b && s[i] <= 0x60) || (s[i] >= 0x7b && s[i] <= 0x7e)) {
+			count++;
+		}
+	}
+	if (count > 1) {
+		sorce = 25;
+	}
+	else if (count == 1) {
+		sorce = 10;
+	}
+	else {
+		sorce = 0;
+	}
+	return sorce;
+}
+
+int awardSorce(string &s)
+{
+	int sorce = 0;
+	if ((letterSorce(s) == 20) && numberSorce(s) && symbolSorce(s)) {
+		sorce = 5;
+	}
+	else if (letterSorce(s) && numberSorce(s) && symbolSorce(s)) {
+		sorce = 3;
+	}
+	else {
+		sorce = 2;
+	}
+	return sorce;
+}
+
+int main()
+{
+	string code = "";
+	cin >> code;
+	int sorce = lengthSorce(code) + letterSorce(code) + numberSorce(code)
+		+ symbolSorce(code) + awardSorce(code);
+	if (sorce >= 90) {
+		cout << "VERY_SECURE" << endl;
+	}
+	else if (sorce >= 80) {
+		cout << "SECURE" << endl;
+	}
+	else if (sorce >= 70) {
+		cout << "VERY_STRONG" << endl;
+	}
+	else if (sorce >= 60) {
+		cout << "STRONG" << endl;
+	}
+	else if (sorce >= 50) {
+		cout << "AVERAGE" << endl;
+	}
+	else if (sorce >= 25) {
+		cout << "WEAK" << endl;
+	}
+	else {
+		cout << "VERY_WEAK" << endl;
+	}
+	return 0;
+}
+
+#if 0
 void func(char **m)
 {
 	++m;
@@ -18,6 +208,7 @@ int main()
 	func(p);
 	return 0;
 }
+#endif
 
 
 #if 0
@@ -255,6 +446,7 @@ public:
 		return res;
 	}
 };
+#endif
 
 
 
