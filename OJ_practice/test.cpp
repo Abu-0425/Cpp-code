@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <stack>
+#include <queue>
 #include <string>
 #include <string.h>
 #include <algorithm>
@@ -7,6 +9,143 @@ using namespace std;
 
 
 
+void fun(const int &v1, const int &v2)
+{
+	cout << v1 << endl; 
+	cout << v2 << endl; 
+}
+
+int main()
+{
+	int i = 0;
+	fun(++i, i++); //2 0
+	//fun(i++, ++i); //1 2
+	return 0;
+}
+
+
+#if 0
+//旋转链表
+class Solution {
+public:
+	ListNode* rotateRight(ListNode* head, int k) {
+		if(!head || !head->next) {
+			return head;
+		}
+		int len = 1; //统计链表长度
+		ListNode *p = head;
+		while(p->next) {
+			len++;
+			p = p->next;
+		}
+		p->next = head; //闭合链表
+		k %= len; //取模去重
+		p = head; 
+		//寻找断开的地方
+		while(--len != k) {
+			p = p->next;
+		}
+		//断开并重新连接
+		head = p->next;
+		p->next = nullptr;
+		return head;
+	}
+};
+
+//最小栈
+class MinStack {
+public:
+	/** initialize your data structure here. */
+	MinStack() {
+
+	}
+
+	void push(int x) {
+		s.push(x);
+		if(minS.empty() || x <= minS.top()) {
+			minS.push(x);
+		}
+	}
+
+	void pop() {
+		if(s.top() == minS.top()) {
+			minS.pop();
+		}
+		s.pop();
+	}
+
+	int top() {
+		return s.top();
+	}
+
+	int getMin() {
+		return minS.top();
+	}
+private:
+	stack<int> s;
+	stack<int> minS;
+};
+
+//栈的压入弹出顺序
+class Solution {
+public:
+	bool IsPopOrder(vector<int> pushV,vector<int> popV) {
+		size_t i = 0, j = 0;
+		stack<int> s;
+		while(j < popV.size()) {
+			//栈空或者栈顶元素不等于出栈元素时不断入栈
+			while(i < pushV.size() && (s.empty() || s.top() != popV[j])) {
+				s.push(pushV[i]);
+				i++;
+			}
+			//此时若还不相等，就说明肯定有错
+			if(s.top() != popV[j]) {
+				return false;
+			}
+			s.pop();
+			j++;
+		}
+		return true;
+	}
+};
+
+//逆波兰表达式求值
+class Solution {
+public:
+	int evalRPN(vector<string>& tokens) {
+		stack<int> s;
+		size_t i = 0;
+		for (auto e : tokens) {
+			if (e != "+" && e != "-" && e != "*" && e != "/") {
+				s.push(atoi(e.c_str()));
+			}
+			else {
+				int right = s.top();
+				s.pop();
+				int left = s.top();
+				s.pop();
+				int res;
+				switch (e[0]) {
+				case '+':
+					res = left + right;
+					break;
+				case '-':
+					res = left - right;
+					break;
+				case '*':
+					res = left * right;
+					break;
+				case '/':
+					res = left / right;
+					break;
+				}
+				s.push(res);
+			}
+		}
+		return s.top();
+	}
+};
+#endif
 
 #if 0
 //无穷大满二叉树的最近公共祖先(节点按照层序遍历依次编号(1,2,3,...))
