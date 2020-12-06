@@ -7,24 +7,36 @@
 #include <algorithm>
 using namespace std;
 
-
-
-void fun(const int &v1, const int &v2)
-{
-	cout << v1 << endl; 
-	cout << v2 << endl; 
-}
-
-int main()
-{
-	int i = 0;
-	fun(++i, i++); //2 0
-	//fun(i++, ++i); //1 2
-	return 0;
-}
-
-
 #if 0
+//分隔链表
+class Solution {
+public:
+	ListNode* partition(ListNode* head, int x) {
+		ListNode *lessHead, *lessTail;
+		ListNode *greaterHead, *greaterTail;
+		greaterHead = greaterTail = new ListNode(-1);
+		lessHead = lessTail = new ListNode(-1);
+		while (head) {
+			if (head->val < x) {
+				lessTail->next = head;
+				lessTail = head;
+			}
+			else {
+				greaterTail->next = head;
+				greaterTail = head;
+			}
+			head = head->next;
+		}
+		lessTail->next = greaterHead->next;
+		greaterTail->next = nullptr;
+		head = lessHead->next;
+		delete greaterHead;
+		delete lessHead;
+		return head;
+	}
+};
+
+
 //旋转链表
 class Solution {
 public:
