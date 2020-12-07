@@ -8,6 +8,83 @@
 using namespace std;
 
 #if 0
+//合并俩个链表
+class Solution {
+public:
+	ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
+		ListNode *p = list1;
+		int i = 1;
+		while (i < a) {
+			p = p->next;
+			i++;
+		}
+		ListNode *q = p->next, *prev = nullptr;
+		p->next = list2;
+		while (i <= b) {
+			prev = q;
+			q = q->next;
+			delete prev;
+			i++;
+		}
+		ListNode *k = list2;
+		while (k->next) {
+			k = k->next;
+		}
+		k->next = q;
+		return list1;
+	}
+};
+
+//序列化二叉树
+class Solution {
+public:
+	string s = "";
+	void serialize(TreeNode *t) {
+		if (!t) {
+			s.append("#,");
+			return;
+		}
+		else {
+			s.append(to_string(t->val));
+			s.append(",");
+			serialize(t->left);
+			serialize(t->right);
+		}
+	}
+	char* Serialize(TreeNode *root) {
+		serialize(root);
+		return (char*)s.c_str();
+	}
+	TreeNode* deserialize(char* &str)
+	{
+		if (str == nullptr)
+			return nullptr;
+		if (*str == '\0')
+			return nullptr;
+		if (*str == '#')
+		{
+			++str;
+			++str;
+			return nullptr;
+		}
+		if (*str == '\0')
+			return nullptr;
+		int val = atoi(str);
+		TreeNode* root = new TreeNode(val);
+		while (*str != '\0' && isalnum(*str))
+			++str;
+		++str;
+		root->left = deserialize(str);
+		root->right = deserialize(str);
+		return root;
+	}
+	TreeNode* Deserialize(char *str) {
+		return deserialize(str);
+	}
+};
+#endif
+
+#if 0
 //分隔链表
 class Solution {
 public:
