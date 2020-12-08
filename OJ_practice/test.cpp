@@ -7,6 +7,73 @@
 #include <algorithm>
 using namespace std;
 
+
+#if 0
+//删除有序链表中重复出现的元素
+class Solution {
+public:
+	/**
+	*
+	* @param head ListNode类
+	* @return ListNode类
+	*/
+	ListNode* deleteDuplicates(ListNode* head) {
+		if (!head || !head->next) return head;
+		ListNode *cur = head, *prev = nullptr;
+		ListNode *next_node = cur->next;
+		while (next_node) {
+			if (next_node->val != cur->val) {
+				prev = cur;
+				cur = next_node;
+				next_node = next_node->next;
+			}
+			else {
+				while (next_node && cur->val == next_node->val) {
+					next_node = next_node->next;
+				}
+				if (!prev) {
+					head = next_node;
+				}
+				else {
+					prev->next = next_node;
+				}
+				while (cur != next_node) {
+					ListNode *p = cur;
+					cur = cur->next;
+					delete p;
+				}
+				if (next_node) {
+					next_node = next_node->next;
+				}
+			}
+		}
+		return head;
+	}
+};
+
+//打家劫舍
+class Solution {
+public:
+	int rob(vector<int>& nums) {
+		if(nums.empty()) {
+			return 0;
+		}
+		int size = nums.size();
+		if(size == 1) {
+			return nums[0];
+		}
+		int first = nums[0];
+		int second = max(first, nums[1]);
+		for(int i =2; i < size; i++) {
+			int tmp = second;
+			second = max(nums[i] + first, tmp);
+			first = tmp;
+		}
+		return second;
+	}
+};
+#endif
+
 #if 0
 //合并俩个链表
 class Solution {
