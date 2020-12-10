@@ -7,6 +7,96 @@
 #include <algorithm>
 using namespace std;
 
+//完全数计算
+bool isPerfectNumber(int num)
+{
+	int sum = 1;
+	for(int i = 2; i <= num/2; i++) {
+		if( num % i == 0) {
+			sum += i;
+		}
+	}
+	return sum == num;
+}
+
+int count(int n)
+{
+	int count = 0;
+	for (int i = 2; i < n + 1; i++) {
+		if (isPerfectNumber(i)) {
+			count++;
+		}
+	}
+	return count;
+}
+
+int main()
+{
+	int n;
+	while (cin >> n) {
+		cout << count(n) << endl;
+	}
+	return 0;
+}
+
+#if 0
+int main()
+{
+	int n = 197;
+	n = (n & 0x55555555) + ((n >> 1) & 0x55555555);
+	n = (n & 0x33333333) + ((n >> 2) & 0x33333333);
+	n = (n & 0x0f0f0f0f) + ((n >> 4) & 0x0f0f0f0f);
+	n = (n & 0x00ff00ff) + ((n >> 8) & 0x00ff00ff);
+	n = (n & 0x0000ffff) + ((n >> 16) & 0x0000ffff);
+	cout << n << endl; //4
+	return 0;
+}
+#endif
+
+
+#if 0
+//幸运的袋子
+int judgeLuck(vector<int> &bags, int n, int pos, int sum, int mul) 
+{
+	int count = 0;
+	for(int i = pos; i < n; i++) {
+		sum += bags[i];
+		mul *= bags[i];
+		if(sum > mul) {
+			count += 1 + judgeLuck(bags, n, i + 1, sum, mul);
+		}
+		else if(bags[i] == 1) {
+			count += judgeLuck(bags, n, i + 1, sum, mul);
+		}
+		else {
+			break;
+		}
+		sum -= bags[i];
+		mul /= bags[i];
+		while(i < n -1 && bags[i] == bags[i + 1]) {
+			i++;
+		}
+	}
+	return count;
+}
+
+
+int main()
+{
+	int n = 0;
+	while(cin >> n) {
+		vector<int> bags(n);
+		for(int i = 0; i < n; i++) {
+			cin >> bags[i];
+		}
+		sort(bags.begin(), bags.end());
+		int res = judgeLuck(bags, n, 0, 0, 1);
+		cout << res << endl;
+	}
+	return 0;
+}
+#endif
+
 
 #if 0
 //删除有序链表中重复出现的元素
