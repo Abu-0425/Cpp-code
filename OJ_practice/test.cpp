@@ -7,6 +7,104 @@
 #include <algorithm>
 using namespace std;
 
+
+class A{
+public:
+	A() {
+		p();
+	}
+	virtual void p() {
+		cout << "A" << endl;
+	}
+	virtual ~A() {
+		p();
+	}
+};
+
+class B : public A{
+public:
+	B() {
+		p();
+	}
+	virtual void p() {
+		cout << "B" << endl;
+	}
+	~B() {
+		p();
+	}
+};
+
+int main()
+{
+	A *a = new B();
+	delete a;
+	return 0;
+}
+
+#if 0
+//超长正整数相加
+string AddLongInteger(string addend, string augend)
+{
+	string res = "";
+	int i = addend.size() - 1;
+	int j = augend.size() - 1;
+	int carry = 0;
+	while (i >= 0 || j >= 0 || carry != 0) {
+		int num1 = 0, num2 = 0, add = 0;
+		if (i >= 0) {
+			num1 = addend[i] - '0';
+		}
+		if (j >= 0) {
+			num2 = augend[j] - '0';
+		}
+		add = num1 + num2 + carry;
+		res += char(add % 10 + '0');
+		carry = add / 10;
+		i--, j--;
+	}
+	reverse(res.begin(), res.end());
+	return res;
+}
+
+int main()
+{
+	string s1, s2;
+	while (cin >> s1 >> s2) {
+		string ret = AddLongInteger(s1, s2);
+		cout << ret << endl;
+	}
+	return 0;
+}
+
+//杨辉三角的变形
+int evenPos(int n)
+{
+	if(n < 3) {
+		return -1;
+	}
+	else if(n % 2 == 1) {
+		return 2; //奇数行出现在第二个位置
+	}
+	else if(n % 4 == 0) {
+		return 3; //4， 8， 12，...这种行出现在第三个位置
+	}
+	else {
+		return 4;
+	}
+}
+
+int main()
+{
+	int n = 0;
+	while(cin >> n) {
+		int pos = evenPos(n);
+		cout << pos << endl;
+	}
+	return 0;
+}
+#endif
+
+#if 0
 //完全数计算
 bool isPerfectNumber(int num)
 {
@@ -38,6 +136,7 @@ int main()
 	}
 	return 0;
 }
+#endif
 
 #if 0
 int main()
