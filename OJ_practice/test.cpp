@@ -7,39 +7,96 @@
 #include <algorithm>
 using namespace std;
 
-
 class A{
 public:
-	A() {
-		p();
-	}
-	virtual void p() {
+	void print() {
 		cout << "A" << endl;
-	}
-	virtual ~A() {
-		p();
 	}
 };
 
 class B : public A{
 public:
-	B() {
-		p();
-	}
-	virtual void p() {
+	void print() {
 		cout << "B" << endl;
-	}
-	~B() {
-		p();
 	}
 };
 
+class C : public B{
+public:
+	void print() {
+		A::print();
+	}
+};
+
+
+
 int main()
 {
-	A *a = new B();
-	delete a;
+	C c;
+	c.print();
 	return 0;
 }
+
+
+#if 0
+//字符串通配符
+bool solution(const char *s1, const char *s2)
+{
+	//同时走到末尾则表示匹配成功
+	if (*s1 == '\0' && *s2 == '\0') {
+		return true;
+	}
+	//其中一个先走到末尾则说明匹配失败
+	if (*s1 == '\0' || *s2 == '\0') {
+		return false;
+	}
+	if (*s1 == '?') { //匹配一个字符
+		return solution(s1 + 1, s2 + 1);
+	}
+	else if (*s1 == '*') { //匹配0个，1个或多个字符
+		return solution(s1 + 1, s2) || solution(s1 + 1, s2 + 1) || solution(s1, s2 + 1);
+	}
+	else if (*s1 == *s2) { //当前位置字符相同，则匹配下一个字符
+		return solution(s1 + 1, s2 + 1);
+	}
+	//走到这里肯定匹配失败
+	return false;
+}
+
+int main()
+{
+	string s1, s2;
+	while (cin >> s1 >> s2) {
+		bool ret = solution(s1.c_str(), s2.c_str());
+		if (ret) {
+			cout << "true" << endl;
+		}
+		else {
+			cout << "false" << endl;
+		}
+	}
+	return 0;
+}
+
+//统计每个月兔子的总数(斐波那契数列)
+int getTotalCount(int m)
+{
+	if(m == 1 || m == 2) {
+		return 1;
+	}
+	return getTotalCount(m - 1) + getTotalCount(m - 2);
+}
+
+int main()
+{
+	int mouth = 0;
+	while(cin >> mouth) {
+		int count = getTotalCount(mouth);
+		cout << count << endl;
+	}
+	return 0;
+}
+#endif
 
 #if 0
 //超长正整数相加
