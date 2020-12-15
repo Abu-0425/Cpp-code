@@ -7,35 +7,20 @@
 #include <algorithm>
 using namespace std;
 
-class A{
+//有序数组中出现次数超过25%的元素
+class Solution {
 public:
-	void print() {
-		cout << "A" << endl;
+	int findSpecialInteger(vector<int>& arr) {
+		int n = arr.size();
+		int flag = n / 4;
+		for (int i = 0; i < n; i++) {
+			if (arr[i] == arr[i + flag]) {
+				return arr[i];
+			}
+		}
+		return -1;
 	}
 };
-
-class B : public A{
-public:
-	void print() {
-		cout << "B" << endl;
-	}
-};
-
-class C : public B{
-public:
-	void print() {
-		A::print();
-	}
-};
-
-
-
-int main()
-{
-	C c;
-	c.print();
-	return 0;
-}
 
 
 #if 0
