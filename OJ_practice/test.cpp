@@ -7,6 +7,31 @@
 #include <algorithm>
 using namespace std;
 
+//调整数组顺序使基数位于偶数之前（相对位置不变）
+class Solution {
+public:
+	void reOrderArray(vector<int> &array) {
+		int size = array.size();
+		vector<int> tmp(size);
+		for(int i = 0; i < size; i++) {
+			tmp[i] = array[i];
+		}
+		int k = 0;
+		for(int i = 0; i < size; i++) {
+			if(tmp[i] % 2 != 0) {
+				array[k] = tmp[i];
+				k++;
+			}
+		}
+		for(int i = 0; i < size; i++) {
+			if(tmp[i] % 2 == 0) {
+				array[k] = tmp[i];
+				k++;
+			}
+		}
+	}
+};
+
 #if 0
 //删除被覆盖的区间
 class Solution {
