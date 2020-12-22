@@ -7,6 +7,63 @@
 #include <algorithm>
 using namespace std;
 
+#if 0
+//字符集合
+int main()
+{
+	string s;
+	while (cin >> s) {
+		int len = s.size();
+		vector<char> v;
+		for (int i = 0; i < len; i++) {
+			bool flag = false;
+			for (int j = 0; j < v.size(); j++) {
+				if (s[i] == v[j]) {
+					flag = true;
+				}
+			}
+			if (!flag) {
+				v.push_back(s[i]);
+				cout << s[i];
+			}
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
+//元素查找(有序数组左移了)
+class Finder {
+public:
+	int findElement(vector<int> A, int n, int x) {
+		// write code here
+		int left = 0, right = n - 1;
+		while (left <= right) {
+			int mid = (left + right) / 2;
+			if (x == A[mid]) {
+				return mid;
+			}
+			else if (x > A[mid]) {
+				if (x > A[right] && A[mid] < A[left]) {
+					right = mid - 1;
+				}
+				else {
+					left = mid + 1;
+				}
+			}
+			else {
+				if (x < A[left] && A[mid] > A[right]) {
+					left = mid + 1;
+				}
+				else {
+					right = mid - 1;
+				}
+			}
+		}
+		return -1;
+	}
+};
+
 //调整数组顺序使基数位于偶数之前（相对位置不变）
 class Solution {
 public:
@@ -31,6 +88,7 @@ public:
 		}
 	}
 };
+#endif
 
 #if 0
 //删除被覆盖的区间
