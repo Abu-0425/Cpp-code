@@ -7,6 +7,32 @@
 #include <algorithm>
 using namespace std;
 
+//对称的二叉树
+class Solution {
+public:
+	bool IsSymmetric(TreeNode *t1, TreeNode *t2)
+	{
+		if(!t1 && !t2) {
+			return true;
+		}
+		else if(!t1 || !t2) {
+			return false;
+		}
+		else if(t1->val != t2->val) {
+			return false;
+		}
+		bool outsided = IsSymmetric(t1->left, t2->right);
+		bool inside = IsSymmetric(t1->right, t2->left);
+		return outsided && inside;
+	}
+	bool isSymmetric(TreeNode* root) {
+		if(!root) {
+			return true;
+		}
+		return IsSymmetric(root->left, root->right);
+	}
+};
+
 #if 0
 //字符集合
 int main()
