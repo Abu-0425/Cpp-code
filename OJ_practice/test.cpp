@@ -7,23 +7,6 @@
 #include <algorithm>
 using namespace std;
 
-#if 0
-//种花问题
-class Solution {
-public:
-	bool canPlaceFlowers(vector<int>& flowerbed, int n) {
-		int size = flowerbed.size();
-		int count = 0;
-		for (int i = 0; i < size; i++) {
-			if (flowerbed[i] == 0 && (i == 0 || flowerbed[i - 1] == 0) && (i == size - 1 || flowerbed[i + 1] == 0)) {
-				flowerbed[i] = 1;
-				count++;
-			}
-		}
-		return count >= n;
-	}
-};
-
 //对称的二叉树
 class Solution {
 public:
@@ -49,7 +32,6 @@ public:
 		return IsSymmetric(root->left, root->right);
 	}
 };
-#endif
 
 #if 0
 //字符集合
