@@ -7,6 +7,59 @@
 #include <algorithm>
 using namespace std;
 
+#if 0
+//二叉树中的最长交错路径
+class Solution {
+public:
+	int length = 0;
+	void dfs(TreeNode *t, int flag, int len) {
+		if (!t) {
+			return;
+		}
+		length = max(len, length); //更新长度
+		if (flag) {
+			dfs(t->left, 0, len + 1); //右树的左树，存在则长度加一
+			dfs(t->right, 1, 1); //右树的右树，存在则将路径重新设置为1
+		}
+		else {
+			//左树，道理同上
+			dfs(t->left, 0, 1);
+			dfs(t->right, 1, len + 1);
+		}
+	}
+	int longestZigZag(TreeNode* root) {
+		if (!root) {
+			return 0;
+		}
+		dfs(root->left, 0, 1); //左树
+		dfs(root->right, 1, 1); //右树
+		return length;
+	}
+};
+
+//打家劫舍2
+class Solution {
+public:
+	int func(vector<int>& nums, int begin, int end) {
+		int prev = 0, cur = 0;
+		for (int i = begin; i < end; i++) {
+			int tmp = cur;
+			cur = max(prev + nums[i], tmp);
+			prev = tmp;
+		}
+		return cur;
+	}
+	int rob(vector<int>& nums) {
+		int size = nums.size();
+		if (size == 1) {
+			return nums[0];
+		}
+		int ret1 = func(nums, 0, size - 1);
+		int ret2 = func(nums, 1, size);
+		return max(ret1, ret2);
+	}
+};
+
 //对称的二叉树
 class Solution {
 public:
@@ -32,6 +85,7 @@ public:
 		return IsSymmetric(root->left, root->right);
 	}
 };
+#endif
 
 #if 0
 //字符集合
