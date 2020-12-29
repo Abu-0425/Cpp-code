@@ -7,6 +7,45 @@
 #include <algorithm>
 using namespace std;
 
+//复杂链表的复制
+class Solution {
+public:
+	Node* copyRandomList(Node* head) {
+		if(!head) {
+			return nullptr;
+		}
+		Node *cur = head;
+		while(cur) {
+			Node *p = new Node(cur->val);
+			p->next = cur->next;
+			cur->next = p;
+			cur = p->next;
+		}
+
+		cur = head;
+		while(cur) {
+			if(!cur->random) {
+				cur->next->random = nullptr;
+			}
+			else {
+				cur->next->random = cur->random->next;
+			}
+			cur = cur->next->next;
+		}
+
+		cur = head->next;
+		Node *prev = head, *res = head->next;
+		while(cur->next) {
+			prev->next = prev->next->next;
+			cur->next = cur->next->next;
+			prev = prev->next;
+			cur = cur->next;
+		}
+		prev->next = nullptr;
+		return res;
+	}
+};
+
 #if 0
 //二叉树中的最长交错路径
 class Solution {
