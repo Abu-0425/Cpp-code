@@ -7,6 +7,40 @@
 #include <algorithm>
 using namespace std;
 
+
+#if 0
+//二分查找
+class Solution {
+public:
+	/**
+	* 二分查找
+	* @param n int整型 数组长度
+	* @param v int整型 查找值
+	* @param a int整型vector 有序数组
+	* @return int整型
+	*/
+	int upper_bound_(int n, int v, vector<int>& a) {
+		// write code here
+		int left = 0;
+		int right = n - 1;
+		while (left <= right) {
+			int mid = (left + right) / 2;
+			if (a[mid] >= v) {
+				if (a[mid - 1] >= v) {
+					right = mid - 1;
+				}
+				else {
+					return mid + 1;
+				}
+			}
+			else {
+				left = mid + 1;
+			}
+		}
+		return n + 1;
+	}
+};
+
 //复杂链表的复制
 class Solution {
 public:
@@ -45,6 +79,7 @@ public:
 		return res;
 	}
 };
+#endif
 
 #if 0
 //二叉树中的最长交错路径
