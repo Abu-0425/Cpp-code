@@ -1,4 +1,20 @@
+#include <iostream>
+using namespace std;
 
+//巴什博弈问题
+int main()
+{
+	int n, m, Case;
+	cin >> Case;
+	while (Case--) {
+		cin >> n >> m;
+		cout << (n % (m + 1) ? "Win" : "Lose") << endl;
+	}
+	return 0;
+}
+
+
+#if 0
 //三数之和
 class Solution {
 public:
@@ -30,6 +46,7 @@ public:
 		return res;
 	}
 };
+#endif
 
 #if 0
 //整数反转
