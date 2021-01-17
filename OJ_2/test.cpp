@@ -1,5 +1,68 @@
 #include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
 using namespace std;
+
+//查找俩个子串中的最长公共子串
+int main()
+{
+	string s1, s2;
+	while (cin >> s1 >> s2) {
+		if (s1.length() > s2.length()) {
+			swap(s1, s2);
+		}
+		int len1 = s1.length();
+		int len2 = s2.length();
+		vector<vector<int>> vv(len1, vector<int>(len2, 0));
+		int len = 0, start_pos = 0;
+		for (int i = 0; i < len1; i++) {
+			for (int j = 0; j < len2; j++) {
+				if (s1[i] == s2[j]) {
+					if (i == 0 || j == 0) {
+						vv[i][j] = 1;
+					}
+					else {
+						vv[i][j] = vv[i - 1][j - 1] + 1;
+					}
+				}
+				if (vv[i][j] > len) {
+					len = vv[i][j];
+					start_pos = i - len + 1;
+				}
+			}
+		}
+		cout << s1.substr(start_pos, len) << endl;
+	}
+	return 0;
+}
+
+#if 0
+//喝汽水问题
+int drink(int n)
+{
+	int empty = n;
+	int ret = 0;
+	while (empty >= 3) {
+		ret += empty / 3;
+		empty = empty / 3 + empty % 3;
+	}
+	if (empty == 2) {
+		ret += 1;
+	}
+	return ret;
+}
+
+int main()
+{
+	int n;
+	while (cin >> n && n) {
+		cout << drink(n) << endl;
+	}
+	return 0;
+}
+#endif
 
 
 #if 0
