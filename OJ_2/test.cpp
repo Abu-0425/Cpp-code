@@ -5,6 +5,64 @@
 
 using namespace std;
 
+#if 0
+//最长公共子串的长度
+int getCommonStrLength(const string &s1, const string &s2)
+{
+	int len1 = s1.length();
+	int len2 = s2.length();
+	vector<vector<int>> vv(len1, vector<int>(len2, 0));
+	int resLength = 0;
+	for (int i = 0; i < len1; i++) {
+		for (int j = 0; j < len2; j++) {
+			if (s1[i] == s2[j]) {
+				if (i == 0 || j == 0) {
+					vv[i][j] = 1;
+				}
+				else {
+					vv[i][j] = vv[i - 1][j - 1] + 1;
+				}
+			}
+			if (vv[i][j] > resLength) {
+				resLength = vv[i][j];
+			}
+		}
+	}
+	return resLength;
+}
+
+
+int main()
+{
+	string s1, s2;
+	while (cin >> s1 >> s2) {
+		cout << getCommonStrLength(s1, s2) << endl;
+	}
+	return 0;
+}
+
+//字符串反转
+string ReverseString(string &s)
+{
+	int len = s.length();
+	int start = 0;
+	int end = len - 1;
+	while (start < end) {
+		swap(s[start], s[end]);
+		start++, end--;
+	}
+	return s;
+}
+
+int main()
+{
+	string s;
+	while (cin >> s) {
+		cout << ReverseString(s) << endl;
+	}
+	return 0;
+}
+
 //查找俩个子串中的最长公共子串
 int main()
 {
@@ -37,6 +95,7 @@ int main()
 	}
 	return 0;
 }
+#endif
 
 #if 0
 //喝汽水问题
