@@ -2,8 +2,65 @@
 #include <string>
 #include <algorithm>
 #include <vector>
-
 using namespace std;
+
+
+//小易的升级之路
+int gcd(int n1, int n2)
+{
+	while(n1 % n2) {
+		int tmp = n1 % n2;
+		n1 = n2;
+		n2 = tmp;
+	}
+	return n2;
+}
+
+int main()
+{
+	int n, a;
+	while(cin >> n >> a) {
+		vector<int> v(n);
+		for(int i = 0; i < n; i++) {
+			cin >> v[i];
+		}
+		for(int i = 0; i < n; i++) {
+			if(a >= v[i]) {
+				a += v[i];
+			}
+			else {
+				a += gcd(v[i], a);
+			}
+		}
+		cout << a << endl;
+	}
+	return 0;
+}
+
+#if 0
+//找出字符串中第一个只出现一次的字符
+int main()
+{
+	string s;
+	while(cin >> s) {
+		int len = s.length();
+		vector<int> v(256, 0);
+		for(int i = 0; i < len; i++) {
+			v[s[i]] += 1;
+		}
+		int i = 0;
+		for(; i < len; i++) {
+			if(v[s[i]] == 1) {
+				cout << s[i] << endl;
+				break;
+			}
+		}
+		if(i == len) {
+			cout << -1 << endl;
+		}
+	}
+	return 0;
+}
 
 //洗牌
 vector<int> XiPai(vector <int> v, int n)
@@ -48,7 +105,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //最长公共子串的长度
 int getCommonStrLength(const string &s1, const string &s2)
 {
@@ -138,9 +194,7 @@ int main()
 	}
 	return 0;
 }
-#endif
 
-#if 0
 //喝汽水问题
 int drink(int n)
 {
@@ -164,10 +218,7 @@ int main()
 	}
 	return 0;
 }
-#endif
 
-
-#if 0
 //最长回文子串
 class Solution {
 public:
@@ -207,10 +258,7 @@ int main()
 	}
 	return 0;
 }
-#endif
 
-
-#if 0
 //三数之和
 class Solution {
 public:
@@ -242,9 +290,7 @@ public:
 		return res;
 	}
 };
-#endif
 
-#if 0
 //整数反转
 class Solution {
 public:
