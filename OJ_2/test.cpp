@@ -4,7 +4,57 @@
 #include <vector>
 using namespace std;
 
+//迷宫问题
+int row, col;
+vector<vector<int>> maze;
+vector<vector<int>> tmp; //当前路径
+vector<vector<int>> best; //最短路径
 
+void Track(int i, int j)
+{
+	maze[i][j] = 1; //表示已走过
+	tmp.push_back({i, j});
+	if(i == row - 1 && j == col - 1) {
+		if(best.empty() || tmp.size() < best.size()) {
+			best = tmp;
+		}
+	}
+	if(i - 1 >= 0 && maze[i - 1][j] == 0) {
+		Track(i - 1, j);
+	}
+	if(i + 1 < row && maze[i + 1][j] == 0) {
+		Track(i + 1, j);
+	}
+	if(j - 1 >= 0 && maze[i][j - 1] == 0) {
+		Track(i, j - 1);
+	}
+	if(j + 1 < col && maze[i][j + 1] == 0) {
+		Track(i, j + 1);
+	}
+	maze[i][j] = 0; //回溯
+	tmp.pop_back();
+}
+
+int main()
+{
+	while(cin >> row >> col) {
+		tmp.clear();
+		best.clear();
+		maze = vector<vector<int>>(row, vector<int>(col, 0));
+		for(auto &i : maze) {
+			for(auto &j : i) {
+				cin >> j;
+			}
+		}
+		Track(0, 0);
+		for(auto e : best) {
+			cout << '(' << e[0] << ',' << e[1] << ')' << endl;
+		}
+	}
+	return 0;
+}
+
+#if 0
 //小易的升级之路
 int gcd(int n1, int n2)
 {
@@ -37,7 +87,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //找出字符串中第一个只出现一次的字符
 int main()
 {
