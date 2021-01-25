@@ -4,6 +4,65 @@
 #include <vector>
 using namespace std;
 
+#if 0
+//星际密码
+vector<int> a = { 1, 1 };
+
+void fib_init()
+{
+	for (int i = 2; i < 10001; ++i)
+		a.push_back((a[i - 1] + a[i - 2]) % 10000);
+}
+
+int main()
+{
+	int n, i;
+	fib_init();
+	while (cin >> n)
+	{
+		while (n--)
+		{
+			cin >> i;
+			printf("%04d", a[i]);
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
+//数根
+int getShuGen(int n)
+{
+	int add = 0;
+	if (n > 9) {
+		while (n) {
+			add += n % 10;
+			n /= 10;
+		}
+		int res = 0;
+		if (add > 9) {
+			while (add) {
+				res += add % 10;
+				add /= 10;
+			}
+			return res;
+		}
+		else {
+			return add;
+		}
+	}
+	return n;
+}
+
+int main()
+{
+	int n;
+	while(cin >> n) {
+		cout << getShuGen(n) << endl;
+	}
+	return 0;
+}
+
 //迷宫问题
 int row, col;
 vector<vector<int>> maze;
@@ -54,7 +113,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //小易的升级之路
 int gcd(int n1, int n2)
 {
