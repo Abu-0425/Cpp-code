@@ -5,6 +5,34 @@
 using namespace std;
 
 #if 0
+//不用加减乘除做加法
+class Solution {
+public:
+	int Add(int num1, int num2)
+	{
+		if (0 == num1 || 0 == num2) {
+			return 0 == num1 ? num2 : num1;
+		}
+		int add = 0, carry = 0;
+		while (num2 != 0) {
+			add = num1 ^ num2;
+			carry = (num1 & num2) << 1;
+			num1 = add;
+			num2 = carry;
+		}
+		return num1;
+	}
+};
+
+//三角形
+bool IsTriangle(double a, double b, double c)
+{
+	if (a + b <= c || a + c <= b || b + c <= a) {
+		return false;
+	}
+	return true;
+}
+
 //快到碗里来
 int main()
 {
