@@ -5,6 +5,38 @@
 using namespace std;
 
 #if 0
+//快到碗里来
+int main()
+{
+	double n, r;
+	while (cin >> n >> r) {
+		if (2 * 3.14 * r < n) {
+			cout << "No" << endl;
+		}
+		else {
+			cout << "Yes" << endl;
+		}
+	}
+	return 0;
+}
+
+//变态青蛙跳台阶
+class Solution {
+public:
+	int power2(int k)
+	{
+		if(k == 0) {
+			return 1;
+		}
+		else {
+			return 2 * power2(k - 1);
+		}
+	}
+	int jumpFloorII(int number) {
+		return power2(number - 1);
+	}
+};
+
 //星际密码
 vector<int> a = { 1, 1 };
 
