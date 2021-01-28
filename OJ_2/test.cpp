@@ -5,6 +5,46 @@
 using namespace std;
 
 #if 0
+class Solution {
+public:
+	/**
+	*  奇数位上都是奇数或者偶数位上都是偶数
+	*  输入：数组arr，长度大于2
+	*  len：arr的长度
+	*  将arr调整成奇数位上都是奇数或者偶数位上都是偶数
+	*/
+	bool isEvenNumber(int n)
+	{
+		return n % 2 == 0;
+	}
+	void oddInOddEvenInEven(vector<int>& arr, int len) {
+		int i = 0;
+		int j = 1;
+		while (i < len && j < len) {
+			if (isEvenNumber(arr[len - 1])) {
+				swap(arr[i], arr[len - 1]);
+				i += 2;
+			}
+			else {
+				swap(arr[j], arr[len - 1]);
+				j += 2;
+			}
+		}
+	}
+};
+
+//猴子分桃
+int main()
+{
+	int n;
+	while (cin >> n && n) {
+		long a = pow(5, n) - 4;
+		long b = pow(4, n) + n - 4;
+		cout << a << " " << b << endl;
+	}
+	return 0;
+}
+
 //不用加减乘除做加法
 class Solution {
 public:
