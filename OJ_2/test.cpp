@@ -5,6 +5,60 @@
 using namespace std;
 
 #if 0
+//有假币
+int main()
+{
+	int n;
+	while (cin >> n && n) {
+		int count = 0;
+		while (n > 1) {
+			++count;
+			if (n % 3) {
+				n = n / 3 + 1;
+			}
+			else {
+				n /= 3;
+			}
+		}
+		cout << count << endl;
+	}
+	return 0;
+}
+
+//求正数数组的最小不可组成和
+class Solution {
+public:
+	/**
+	*	正数数组中的最小不可组成和
+	*	输入：正数数组arr
+	*	返回：正数数组中的最小不可组成和
+	*/
+	int getFirstUnFormedNum(vector<int> arr, int len) {
+		int _min = arr[0];
+		int _max = 0;
+		set<int> s;
+		for (int i = 0; i < len; i++) {
+			_max += arr[i];
+			_min = min(_min, arr[i]);
+			vector<int> tmp;
+			for (auto it = s.begin(); it != s.end(); ++it) {
+				tmp.push_back(*it + arr[i]);
+			}
+			for (size_t j = 0; j < tmp.size(); j++) {
+				s.insert(tmp[j]);
+			}
+			s.insert(arr[i]);
+		}
+		for (int i = _min; i <= _max; i++) {
+			if (s.find(i) == s.end()) {
+				return i;
+			}
+		}
+		return _max + 1;
+	}
+};
+
+//将arr调整成奇数位上都是奇数或者偶数位上都是偶数
 class Solution {
 public:
 	/**
