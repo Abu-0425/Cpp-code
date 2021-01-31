@@ -4,7 +4,51 @@
 #include <vector>
 using namespace std;
 
+//质因子个数
+int main()
+{
+	int n;
+	while(cin >> n) {
+		int cnt = 0;
+		for(int i = 2; i <= sqrt(n); i++) {
+			if(n % i == 0) {
+				while(n % i == 0) {
+					n /= i;
+				}
+				cnt++;
+			}
+		}
+		if(n > 1) {
+			cnt++;
+		}
+		cout << cnt << endl;
+	}
+	return 0;
+}
+
 #if 0
+//最难的问题
+int main()
+{
+	string code;
+	while (getline(cin, code)) {
+		int len = code.length();
+		for (int i = 0; i < len; i++) {
+			if (code[i] == ' ') {
+				continue;
+			}
+			if (code[i] > 'E') {
+				code[i] -= 5;
+			}
+			else {
+				code[i] = code[i] - 5 + ('Z' - 'A' + 1);
+			}
+		}
+		cout << code << endl;
+	}
+	return 0;
+}
+
 //有假币
 int main()
 {
