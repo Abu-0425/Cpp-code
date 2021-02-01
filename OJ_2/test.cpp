@@ -4,6 +4,72 @@
 #include <vector>
 using namespace std;
 
+#if 0
+//美国节日
+int getDayOfWeek(int year, int mouth, int cnt, int _week, bool flag)
+{
+	if (mouth == 1 || mouth == 2) {
+		mouth += 12;
+		year--;
+	}
+	int day, week, i = 0;
+	for (day = flag ? 1 : 31; day <= flag ? 31 : 1; flag ? (day++) : (day--)) {
+		//flag：正数/倒数    
+		week = (day + 2 * mouth + 3 * (mouth + 1) / 5 + year + year / 4 - year / 100 + year / 400) % 7;//基姆拉尔森公式
+		if (week + 1 == _week) {
+			i++;
+		}
+		if (i == cnt) {
+			break;
+		}
+	}
+	return day;
+}
+
+int main()
+{
+	int year;
+	while (cin >> year) {
+		cout << year << "-01-01" << endl;
+		printf("%d-01-%02d\n", year, getDayOfWeek(year, 1, 3, 1, 1));
+		printf("%d-02-%02d\n", year, getDayOfWeek(year, 2, 3, 1, 1));
+		printf("%d-05-%02d\n", year, getDayOfWeek(year, 5, 1, 1, 0));
+		cout << year << "-07-04" << endl;
+		printf("%d-09-%02d\n", year, getDayOfWeek(year, 9, 1, 1, 1));
+		printf("%d-11-%02d\n", year, getDayOfWeek(year, 11, 4, 4, 1));
+		cout << year << "-12-25" << endl << endl;
+	}
+	return 0;
+}
+
+//分解因数
+int main()
+{
+	int a;
+	while (cin >> a) {
+		cout << a << " = ";
+		int i = 2;
+		for (;; i++) {
+			if (a % i == 0) {
+				cout << i;
+				a /= i;
+				break;
+			}
+		}
+		while (a >= 2) {
+			for (i = 2;; i++) {
+				if (a % i == 0) {
+					cout << " * " << i;
+					a /= i;
+					break;
+				}
+			}
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
 //质因子个数
 int main()
 {
@@ -26,7 +92,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //最难的问题
 int main()
 {
