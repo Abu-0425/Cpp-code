@@ -4,7 +4,77 @@
 #include <vector>
 using namespace std;
 
+//ì³²¨ÄÇÆõ·ïÎ²
+int main()
+{
+	int n;
+	vector<int> fib(100001);
+	fib[0] = 1;
+	fib[1] = 1;
+	for (size_t i = 2; i < fib.size(); i++) {
+		fib[i] = (fib[i - 1] + fib[i - 2]) % 1000000;
+	}
+	while (cin >> n) {
+		if (n < 30) {
+			cout << fib[n] << endl;
+		}
+		else {
+			printf("%06d\n", fib[n]);
+		}
+	}
+	return 0;
+}
+
 #if 0
+//ÌÔ±¦Íøµê
+bool isLeapYear(int year)
+{
+	return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+}
+
+int days[2][13] = {
+	{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}, 
+	{0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+};
+
+bool isSu(int m)
+{
+	return (m == 2 || m == 3 || m == 5 || m == 7 || m == 11);
+}
+
+int main()
+{
+	int y1, m1, d1, y2, m2, d2;
+	while(cin >> y1 >> m1 >> d1 >> y2 >> m2 >> d2) {
+		int money = 0;
+		if(y1 == y2 && m1 == m2) {
+			money += (isSu(m1) ? 1 : 2) * (d2 - d1 + 1);
+			d1 = d2;
+		}
+		if(d1 != 1 && (y1 != y2 || m1 != m2)) {
+			money += (isSu(m1) ? 1 : 2) * days[isLeapYear(y1)][m1] - d1 + 1;
+			m1++;
+			d1 = days[isLeapYear(y1)][m1];
+		}
+		while(y1 != y2 || m1 != m2 || d1 != d2) {
+			if(m1 == 13) {
+				y1++;
+				m1 = 1;
+			}
+			if(y1 != y2 || m1 != m2) {
+				money += (isSu(m1) ? 1 : 2) * days[isLeapYear(y1)][m1];
+				m1++;
+			}
+			if(y1 == y2 && m1 == m2) {
+				money += (isSu(m1) ? 1 : 2) * d2;
+				d1 = d2;
+			}
+		}
+		cout << money << endl;
+	}
+	return 0;
+}
+
 //ÃÀ¹ú½ÚÈÕ
 int getDayOfWeek(int year, int mouth, int cnt, int _week, bool flag)
 {
