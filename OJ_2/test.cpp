@@ -4,6 +4,51 @@
 #include <vector>
 using namespace std;
 
+//¿ÍËÆÔÆÀ´
+int main()
+{
+	int from, to;
+	vector<long long> fib(81, 0);
+	fib[1] = 1;
+	fib[2] = 1;
+	for (size_t i = 3; i < fib.size(); i++) {
+		fib[i] = fib[i - 1] + fib[i - 2];
+	}
+	while (cin >> from >> to) {
+		long long count = 0;
+		for (int i = from; i <= to; i++) {
+			count += fib[i];
+		}
+		cout << count << endl;
+	}
+	return 0;
+}
+
+#if 0
+//¼ô»¨²¼Ìõ
+int main()
+{
+	string s, t;
+	while (cin >> s >> t) {
+		int s_len = s.length();
+		int t_len = t.length();
+		int cnt = 0;
+		int pos = 0;
+		int new_pos = 0;
+		while (1) {
+			if ((pos = s.find(t, new_pos)) != string::npos) {
+				cnt++;
+				new_pos = pos + t_len;
+			}
+			else {
+				break;
+			}
+		}
+		cout << cnt << endl;
+	}
+	return 0;
+}
+
 //ì³²¨ÄÇÆõ·ïÎ²
 int main()
 {
@@ -25,7 +70,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //ÌÔ±¦Íøµê
 bool isLeapYear(int year)
 {
