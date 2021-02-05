@@ -4,6 +4,51 @@
 #include <vector>
 using namespace std;
 
+//养兔子
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<long long> fib(n);
+		fib[0] = 1;
+		fib[1] = 2;
+		for (int i = 2; i < n; i++) {
+			fib[i] = fib[i - 1] + fib[i - 2];
+		}
+		cout << fib[n - 1] << endl;
+	}
+	return 0;
+}
+
+#if 0
+//收件人列表
+int main()
+{
+	int n;
+	while(cin >> n) {
+		cin.get(); //处理回车
+		vector<string> name;
+		for (int i = 0; i < n; i++) {
+			getline(cin, name[i]);
+		}
+		for(int i = 0; i < n; i++) {
+			if(i != 0) {
+				cout << ", ";
+			}
+			if((name[i].find(' ') != string::npos) || (name[i].find(',') != string::npos)) {
+				cout << "\"" << name[i] << "\"";
+			}
+			else {
+				cout << name[i];
+			}
+			if (i == n - 1) {
+				cout << endl;
+			}
+		}
+	}
+	return 0;
+}
+
 //客似云来
 int main()
 {
@@ -24,7 +69,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //剪花布条
 int main()
 {
