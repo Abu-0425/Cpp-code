@@ -4,6 +4,37 @@
 #include <vector>
 using namespace std;
 
+#if 0
+//移除元素
+class Solution {
+public:
+	int removeElement(vector<int>& nums, int val) {
+		int size = nums.size();
+		for (int i = 0; i < size; i++) {
+			while (i < size && nums[i] == val) {
+				int tmp = nums[i];
+				nums[i] = nums[size - 1];
+				nums[size - 1] = tmp;
+				size--;
+			}
+		}
+		return size;
+	}
+};
+
+//转换成小写字母
+class Solution {
+public:
+	string toLowerCase(string str) {
+		for (size_t i = 0; i < str.length(); i++) {
+			if (isupper(str[i])) {
+				str[i] = tolower(str[i]);
+			}
+		}
+		return str;
+	}
+};
+
 //养兔子
 int main()
 {
@@ -20,7 +51,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //收件人列表
 int main()
 {
