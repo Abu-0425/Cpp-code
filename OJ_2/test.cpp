@@ -2,7 +2,24 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <unordered_map>
 using namespace std;
+
+//俩数之和
+class Solution {
+public:
+	vector<int> twoSum(vector<int>& nums, int target) {
+		unordered_map<int, int> table;
+		for(int i = 0; i < nums.size(); i++) {
+			auto it = table.find(target - nums[i]);
+			if(it != table.end()) {
+				return {i, it->second};
+			}
+			table[nums[i]] = i;
+		}
+		return {};
+	}
+};
 
 #if 0
 //移除元素
