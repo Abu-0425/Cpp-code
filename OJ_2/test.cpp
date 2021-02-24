@@ -5,6 +5,65 @@
 #include <unordered_map>
 using namespace std;
 
+#if 0
+//回文数
+//法1
+class Solution {
+public:
+	bool isPalindrome(int x) {
+		if (x < 0 || (x % 10 == 0 && x != 0)) {
+			return false;
+		}
+		int end_half = 0;
+		while (x > end_half) {
+			end_half = end_half * 10 + x % 10;
+			x /= 10;
+		}
+		return x == end_half || x == end_half / 10;
+	}
+};
+//法2
+class Solution {
+public:
+	bool isPalindrome(int x) {
+		if (x < 0 || (x % 10 == 0 && x != 0)) {
+			return false;
+		}
+		int div = 1;
+		while (x / div >= 10) {
+			div *= 10;
+		}
+		while (x > 0) {
+			int left = x / div;
+			int right = x % 10;
+			if (left != right) {
+				return false;
+			}
+			x = (x % div) / 10;
+			div /= 100;
+		}
+		return true;
+	}
+};
+
+//赎金信(第一个字符串是否能由第二个字符串中的字母组成)
+class Solution {
+public:
+	bool canConstruct(string ransomNote, string magazine) {
+		int arr[26] = { 0 };
+		for (size_t i = 0; i < magazine.size(); i++) {
+			arr[magazine[i] - 'a']++;
+		}
+		for (size_t i = 0; i < ransomNote.size(); i++) {
+			arr[ransomNote[i] - 'a']--;
+			if (arr[ransomNote[i] - 'a'] < 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+};
+
 //俩数之和
 class Solution {
 public:
@@ -21,7 +80,6 @@ public:
 	}
 };
 
-#if 0
 //移除元素
 class Solution {
 public:
