@@ -5,6 +5,46 @@
 #include <unordered_map>
 using namespace std;
 
+//存在重复元素
+class Solution {
+public:
+	bool containsDuplicate(vector<int>& nums) {
+		if (nums.size() < 2) {
+			return false;
+		}
+		sort(nums.begin(), nums.end());
+		for (int i = 1; i < nums.size(); i++) {
+			if (nums[i] == nums[i - 1]) {
+				return true;
+			}
+		}
+		return false;
+	}
+};
+
+//最后一个单词的长度
+class Solution {
+public:
+	int lengthOfLastWord(string s) {
+		if (s.empty() || s.length() == 0) {
+			return 0;
+		}
+		int length = 0;
+		int end = s.size() - 1;
+		while (end >= 0 && s[end] == ' ') {
+			end--;
+		}
+		if (end >= 0) {
+			while (end >= 0 && s[end] != ' ') {
+				end--;
+				length++;
+			}
+			return length;
+		}
+		return 0;
+	}
+};
+
 #if 0
 //回文数
 //法1
