@@ -5,6 +5,79 @@
 #include <unordered_map>
 using namespace std;
 
+//有序数组的平方
+//法2
+class Solution {
+public:
+	vector<int> sortedSquares(vector<int>& nums) {
+		for (auto &e : nums) {
+			e *= e;
+		}
+		sort(nums.begin(), nums.end());
+		return nums;
+	}
+};
+
+//法1
+class Solution {
+public:
+	vector<int> sortedSquares(vector<int>& nums) {
+		vector<int> ans;
+		int size = nums.size();
+		int neg = -1;
+		for (int i = 0; i < size; i++) {
+			if (nums[i] < 0) {
+				neg = i;
+			}
+			else {
+				break;
+			}
+		}
+		int i = neg, j = neg + 1;
+		while (i >= 0 || j < size) {
+			if (i < 0) {
+				ans.push_back(nums[j] * nums[j]);
+				j++;
+			}
+			else if (j == size){
+				ans.push_back(nums[i] * nums[i]);
+				i--;
+			}
+			else if (nums[i] * nums[i] < nums[j] * nums[j]) {
+				ans.push_back(nums[i] * nums[i]);
+				i--;
+			}
+			else {
+				ans.push_back(nums[j] * nums[j]);
+				j++;
+			}
+		}
+		return ans;
+	}
+};
+
+//长按键入
+class Solution {
+public:
+	bool isLongPressedName(string name, string typed) {
+		int i = 0, j = 0;
+		while(j < typed.size()) {
+			if(i < name.size() && name[i] == typed[j]) {
+				i++;
+				j++;
+			}
+			else if(j > 0 && typed[j] == typed[j - 1]) {
+				j++;
+			}
+			else {
+				return false;
+			}
+		}
+		return i == name.size();
+	}
+};
+
+#if 0
 //存在重复元素
 class Solution {
 public:
@@ -45,7 +118,6 @@ public:
 	}
 };
 
-#if 0
 //回文数
 //法1
 class Solution {
