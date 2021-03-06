@@ -5,6 +5,48 @@
 #include <unordered_map>
 using namespace std;
 
+#if 0
+//连续最大和
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<int> v;
+		for (int i = 0; i < n; i++) {
+			int tmp;
+			cin >> tmp;
+			v.push_back(tmp);
+		}
+		int ans = v[0];
+		int tmp_max = v[0];
+		for (int i = 1; i < n; i++) {
+			tmp_max += v[i];
+			tmp_max = max(tmp_max, v[i]);
+			ans = max(ans, tmp_max);
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
+
+//删除公共字符
+int main()
+{
+	string s1, s2;
+	while (getline(cin, s1)) {
+		getline(cin, s2);
+		string ans = "";
+		for (int i = 0; i < s1.length(); i++) {
+			if (s2.find(s1[i]) != string::npos) {
+				continue;
+			}
+			ans.push_back(s1[i]);
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
+
 //有序数组的平方
 //法2
 class Solution {
@@ -77,7 +119,6 @@ public:
 	}
 };
 
-#if 0
 //存在重复元素
 class Solution {
 public:
