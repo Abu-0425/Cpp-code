@@ -2,8 +2,76 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <stack>
 #include <unordered_map>
 using namespace std;
+
+//mkdir
+bool IsSubstr(string &s1, string &s2)
+{
+	if (s1 == s2.substr(0, s1.size())) {
+		return true;
+	}
+	return false;
+}
+
+void Print(vector<string> &v)
+{
+	string head = "mkdir -p ";
+	int i = 0;
+	while (i < v.size() - 1) {
+		//前一个是后一个的子串并且后一个的下一个位置是'/', 则需要删除前一个字符串
+		if (IsSubstr(v[i], v[i + 1]) && v[i + 1][v[i].size()] == '/') {
+			v.erase(v.begin() + i);
+		}
+		else {
+			i++;
+		}
+	}
+	for (auto &e : v) {
+		cout << head << e << endl;
+	}
+}
+
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<string> v(n);
+		for (auto &e : v) {
+			cin >> e;
+		}
+		sort(v.begin(), v.end());
+		Print(v);
+		cout << endl;
+	}
+	return 0;
+}
+
+//数据库连接池
+int main()
+{
+	int n;
+	while(cin >> n) {
+		stack<string> s;
+		int ans = 0;
+		for(int i = 0; i < n; i++) {
+			string id, operation;
+			cin >> id >> operation;
+			if(operation == "connect") {
+				s.push(id);
+				if(s.size() > ans) {
+					ans = s.size();
+				}
+			}
+			else {
+				s.pop();
+			}
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
 
 #if 0
 //连续最大和
