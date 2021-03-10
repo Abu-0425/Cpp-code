@@ -3,8 +3,104 @@
 #include <algorithm>
 #include <vector>
 #include <stack>
+#include <iomanip>
 #include <unordered_map>
 using namespace std;
+
+#if 0
+//红与黑
+int count = 0;//计数
+
+//采用深度优先遍历的方式解决
+void Result(vector<vector<char>>& vv, int x, int y)
+{
+	//不能通行的情况：越界+白色瓷砖
+	if (x<0 || x >= vv.size() || y<0 || y >= vv[0].size() || vv[x][y] == '#')//走不通
+		return;
+	count++;
+	vv[x][y] = '#';//走过的不能再走，需要标记起来，否则后面无法区分是否走过
+	//上下左右
+	Result(vv, x - 1, y);
+	Result(vv, x + 1, y);
+	Result(vv, x, y - 1);
+	Result(vv, x, y + 1);
+}
+
+int main()
+{
+	int m = 0, n = 0;
+	while (cin >> m >> n)
+	{
+		vector<vector<char>> vv(m, vector<char>(n));
+		int x = 0, y = 0;
+		for (int i = 0; i<m; i++)
+		{
+			for (int j = 0; j<n; j++)
+			{
+				cin >> vv[i][j];
+				//定位到人站的这块瓷砖
+				if (vv[i][j] == '@')
+				{
+					x = i;
+					y = j;
+				}
+			}
+
+		}
+		Result(vv, x, y);
+		cout << count << endl;
+		count = 0;
+	}
+}
+
+
+//蘑菇阵
+int main()
+{
+	int n, m, k;
+	while(cin >> n >> m >> k) {
+		int i, j;
+		int has[25][25];//有无蘑菇
+		double dp[25][25];//能够到达每个格子的概率
+		memset(has, 0, sizeof(has));
+		memset(dp, 0, sizeof(dp));
+		int x, y;
+		for(i = 0; i < k; ++i){
+			cin >> x >> y;
+			has[x][y] = 1;
+		}
+		for(i = 1; i <= n; ++i) {
+			for(j = 1; j <= m; ++j) {
+				if(i == 1 && j == 1) {
+					dp[1][1] = 1; continue;
+				}
+				if(has[i][j]) {
+					dp[i][j] = 0; 
+					continue;
+				}
+				if(i == n && j == m) {
+					dp[i][j] = dp[i-1][j] + dp[i][j-1]; 
+					continue;
+				}
+				if(i == n) {dp[i][j] = dp[i-1][j]*0.5 + dp[i][j-1];
+				continue;
+				}
+				if(j == m) {dp[i][j] = dp[i-1][j] + dp[i][j-1]*0.5;
+				continue;
+				}
+				if(i == 1) {dp[i][j] = dp[i][j-1]*0.5;
+				continue;
+				}
+				if(j == 1) {dp[i][j] = dp[i-1][j]*0.5;
+				continue;
+				}
+				dp[i][j] = dp[i][j-1]*0.5 + dp[i-1][j]*0.5;
+			}
+		}
+		cout << fixed << setprecision(2) << dp[n][m] << endl;
+	}
+	return 0;
+}
 
 //mkdir
 bool IsSubstr(string &s1, string &s2)
@@ -73,7 +169,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //连续最大和
 int main()
 {
