@@ -7,6 +7,36 @@
 #include <unordered_map>
 using namespace std;
 
+//重复的子字符串
+//法1
+class Solution {
+public:
+	bool repeatedSubstringPattern(string s) {
+		int len = s.length();
+		for(int i = 1; i <= len / 2; i++) {
+			bool flag = true;
+			if(len % i == 0) {
+				for(int j = i; j < len; j++) {
+					if(s[j] != s[j - i]) {
+						flag = false;
+					}
+				}
+				if(flag) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+};
+//法2
+class Solution {
+public:
+	bool repeatedSubstringPattern(string s) {
+		return (s + s).find(s, 1) != s.size();
+	}
+};
+
 #if 0
 //红与黑
 int count = 0;//计数
