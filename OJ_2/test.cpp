@@ -3,10 +3,131 @@
 #include <algorithm>
 #include <vector>
 #include <stack>
+#include <queue>
 #include <iomanip>
 #include <unordered_map>
 using namespace std;
 
+//走迷宫
+char maze[10][10];//迷宫
+int flag[10][10] = { 0 };//记录是否走过以及当前步数(0表示没走过)
+
+int Bfs(int x0, int y0)
+{
+	queue<pair<int, int>> q; //存储格子坐标的队列
+	pair<int, int> p;
+	q.push(make_pair(x0, y0));
+	int x, y;
+	while (1) {
+		p = q.front();
+		x = p.first;
+		y = p.second;
+		//走到终点就退出循环
+		if (x == 9 && y == 8) {
+			return flag[9][8];
+		}
+		//分别判断该格子上下左右的格子
+		if ((y - 1) >= 0 && (y - 1) <= 9 && x >= 0 && x <= 9 && flag[x][y - 1] == 0 && maze[x][y - 1] != '#') {
+			flag[x][y - 1] = flag[x][y] + 1;
+			q.push(make_pair(x, y - 1));
+		}
+		if ((y + 1) >= 0 && (y + 1) <= 9 && x >= 0 && x <= 9 && flag[x][y + 1] == 0 && maze[x][y + 1] != '#') {
+			flag[x][y + 1] = flag[x][y] + 1;
+			q.push(make_pair(x, y + 1));
+		}
+		if ((x - 1) >= 0 && (x - 1) <= 9 && y >= 0 && y <= 9 && flag[x - 1][y] == 0 && maze[x - 1][y] != '#') {
+			flag[x - 1][y] = flag[x][y] + 1;
+			q.push(make_pair(x - 1, y));
+		}
+		if ((x + 1) >= 0 && (x + 1) <= 9 && y >= 0 && y <= 9 && flag[x + 1][y] == 0 && maze[x + 1][y] != '#') {
+			flag[x + 1][y] = flag[x][y] + 1;
+			q.push(make_pair(x + 1, y));
+		}
+		//判断完上下左右4个格子后该格子应该出队
+		q.pop();
+	}
+}
+
+int main()
+{
+	char c;
+	while (cin >> c) {
+		maze[0][0] = c;
+		for (int i = 1; i < 10; i++) {
+			cin >> maze[0][i];
+		}
+		getchar(); //吃掉换行
+		for (int i = 1; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				cin >> maze[i][j];
+			}
+			getchar();
+		}
+		cout << Bfs(0, 1) << endl;
+		memset(flag, 0, sizeof(flag)); //清空全局数组flag
+	}
+	return 0;
+}
+
+//解读密码
+int main()
+{
+	string code;
+	while (getline(cin, code)) {
+		int len = code.length();
+		for (int i = 0; i < len; i++) {
+			if (code[i] >= '0' && code[i] <= '9') {
+				cout << code[i];
+			}
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
+//发邮件
+int main()
+{
+	long long ans[21] = { 0 };
+	ans[2] = 1;
+	for (int i = 3; i < 21; i++) {
+		ans[i] = (i - 1) * (ans[i - 1] + ans[i - 2]);
+	}
+	int n;
+	while (cin >> n) {
+		cout << ans[n] << endl;
+	}
+	return 0;
+}
+
+//最长上升子序列
+int main()
+{
+	int n;
+	while(cin >> n) {
+		vector<int> height(n);
+		vector<int> max_long(n);
+		for(int i = 0; i < n; i++) {
+			cin >> height[i];
+			max_long[i] = 1;
+		}
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < i; j++) {
+				if(height[j] < height[i]) {
+					max_long[i] = max(max_long[j] + 1, max_long[i]);
+				}
+			}
+		}
+		int ans = 0;
+		for(auto &m : max_long) {
+			ans = max(ans, m);
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
+
+#if 0
 //重复的子字符串
 //法1
 class Solution {
@@ -37,7 +158,6 @@ public:
 	}
 };
 
-#if 0
 //红与黑
 int count = 0;//计数
 
