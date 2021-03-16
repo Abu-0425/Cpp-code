@@ -8,6 +8,30 @@
 #include <unordered_map>
 using namespace std;
 
+//把数字翻译成字符串
+class Solution {
+public:
+	int translateNum(int num) {
+		string code = to_string(num);
+		int p = 0, q = 0, r = 1;
+		for (size_t i = 0; i < code.size(); i++) {
+			p = q;
+			q = r;
+			r = 0;
+			r += q;
+			if (i == 0) {
+				continue;
+			}
+			string pre = code.substr(i - 1, 2);
+			if (pre >= "10" && pre <= "25") {
+				r += p;
+			}
+		}
+		return r;
+	}
+};
+
+#if 0
 //走迷宫
 char maze[10][10];//迷宫
 int flag[10][10] = { 0 };//记录是否走过以及当前步数(0表示没走过)
@@ -127,7 +151,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //重复的子字符串
 //法1
 class Solution {
