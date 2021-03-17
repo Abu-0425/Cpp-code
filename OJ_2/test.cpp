@@ -10,6 +10,7 @@ using namespace std;
 
 
 
+#if 0
 //把数字翻译成字符串
 class Solution {
 public:
@@ -33,7 +34,6 @@ public:
 	}
 };
 
-#if 0
 //走迷宫
 char maze[10][10];//迷宫
 int flag[10][10] = { 0 };//记录是否走过以及当前步数(0表示没走过)
