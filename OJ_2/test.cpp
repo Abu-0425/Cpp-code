@@ -8,6 +8,85 @@
 #include <unordered_map>
 using namespace std;
 
+//乒乓球框
+int main()
+{
+	string a, b;
+	while (cin >> a >> b) {
+		int len_a = a.size();
+		int len_b = b.size();
+		int count[26] = { 0 };
+		for (int i = 0; i < len_a; i++) {
+			count[a[i] - 'A']++;
+		}
+		bool flag = false; //标记是否为No
+		for (int i = 0; i < len_b; i++) {
+			count[b[i] - 'A']--;
+			if (count[b[i] - 'A'] < 0) {
+				cout << "No" << endl;
+				flag = true; //是No后边就不输出Yes
+				break;
+			}
+		}
+		if (!flag) {
+			cout << "Yes" << endl;
+		}
+	}
+	return 0;
+}
+
+//查找兄弟单词
+bool isBrotherWord(string s1, string s2)
+{
+	if(s1.length() == s2.length()) {
+		if(s1 == s2) {
+			return false;
+		}
+		sort(s1.begin(), s1.end());
+		sort(s2.begin(), s2.end());
+		if(s1 == s2) {
+			return true;
+		}
+	}
+	return false;
+}
+
+int main()
+{
+	int num;
+	while(cin >> num) {
+		vector<string> dict;
+		for(int i = 0; i < num; i++) {
+			string tmp;
+			cin >>  tmp;
+			dict.push_back(tmp);
+		}
+		sort(dict.begin(), dict.end());
+		string word;
+		int n;
+		cin >> word;
+		cin >> n;
+		string ans_word;
+		int count = 0;
+		for(int i  = 0; i < num; i++) {
+			if(isBrotherWord(word, dict[i])) {
+				count++;
+				if(count == n) {
+					ans_word = dict[i];
+				}
+			}
+		}
+		cout << count;
+		if(count >= n) {
+			cout << " " << ans_word << endl;
+		}
+		else {
+			cout << endl;
+		}
+	}
+	return 0;
+}
+
 
 #if 0
 //把数字翻译成字符串
