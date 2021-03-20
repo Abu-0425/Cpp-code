@@ -8,6 +8,90 @@
 #include <unordered_map>
 using namespace std;
 
+//简单错误记录
+struct ErrorLog{
+	string file_name;
+	int line;
+	int count; //该错误出现的次数
+};
+
+ErrorLog CreateLog(string file_name, const int &line)
+{
+	int len = file_name.size();
+	int index = -1;
+	for (int i = len - 1; i >= 0; i--) {
+		if (file_name[i] == '\\') {
+			index = i;
+			break;
+		}
+	}
+	ErrorLog log;
+	file_name = file_name.substr(index + 1);
+	log.file_name = file_name;
+	log.line = line;
+	log.count = 1;
+	return log;
+}
+
+void RecordErrorLog(vector<ErrorLog> &all_log, const ErrorLog &log)
+{
+	bool isRepeat = false;
+	for (size_t i = 0; i < all_log.size(); i++) {
+		if (log.file_name == all_log[i].file_name && log.line == all_log[i].line) {
+			all_log[i].count++;
+			isRepeat = true;
+			break;
+		}
+	}
+	if (!isRepeat) {
+		all_log.push_back(log);
+	}
+}
+
+int main()
+{
+	string file;
+	int n;
+	vector<ErrorLog> all_log;
+	while (cin >> file >> n) {
+		ErrorLog log = CreateLog(file, n);
+		RecordErrorLog(all_log, log);
+	}
+	int start = all_log.size() - 8;
+	if (start < 0) {
+		start = 0;
+	}
+	for (int i = start; i < all_log.size(); i++) {
+		int len = all_log[i].file_name.size();
+		if (len > 16) {
+			all_log[i].file_name = all_log[i].file_name.substr(len - 16);
+		}
+		cout << all_log[i].file_name << " " << all_log[i].line << " " << all_log[i].count << endl;
+	}
+	return 0;
+}
+
+//数组中出现次数超过一半的数字
+class Solution {
+public:
+	int MoreThanHalfNum_Solution(vector<int> numbers) {
+		int ans = 0, count = 0, votes = 0;
+		for(auto &e : numbers) {
+			if(votes == 0) {
+				ans = e;
+			}
+			votes += ans == e ? 1 : -1;
+		}
+		for(auto &e : numbers) {
+			if(e == ans) {
+				count++;
+			}
+		}
+		return count > numbers.size() / 2 ? ans : 0;
+	}
+};
+
+#if 0
 //乒乓球框
 int main()
 {
@@ -78,17 +162,14 @@ int main()
 		}
 		cout << count;
 		if(count >= n) {
-			cout << " " << ans_word << endl;
+			cout << " " << ans_word;
 		}
-		else {
-			cout << endl;
-		}
+		cout << endl;
 	}
 	return 0;
 }
 
 
-#if 0
 //把数字翻译成字符串
 class Solution {
 public:
