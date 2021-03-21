@@ -8,6 +8,256 @@
 #include <unordered_map>
 using namespace std;
 
+//寻找第K大(通过快排)
+class Solution {
+public:
+	int partition(vector<int> &a, int l, int r) {
+		int key = a[l];
+		while(l < r) {
+			while(l < r && a[r] < key) {
+				r--;
+			}
+			a[l] = a[r];
+			while(l < r && a[l] >= key) {
+				l++;
+			}
+			a[r] = a[l];
+		}
+		a[l] = key;
+		return l;
+	}
+	int findKth(vector<int> a, int n, int K) {
+		// write code here
+		int left = 0, right = n;
+		while(left < right) {
+			int key = partition(a, left, right - 1);
+			if(key + 1 == K) {
+				return a[key];
+			}
+			else if(key + 1 < K) {
+				left = key + 1;
+			}
+			else {
+				right = key;
+			}
+		}
+		return -1;
+	}
+};
+
+/*topk问题*/
+#if 0
+//自建大/小堆
+class Solution {
+private:
+	void AdjustUp(vector <int> &v, int cur)
+	{
+		int n = v.size();
+		int i = cur, j = 2 * i + 1;
+		int tmp = v[i];
+		while (j < n) {
+			if (j + 1 < n && v[j + 1] < v[j]) {
+				j++;
+			}
+			if (v[j] < tmp) {
+				v[i] = v[j];
+				i = j;
+				j = 2 * i + 1;
+			}
+			else {
+				break;
+			}
+		}
+		v[i] = tmp;
+	}
+
+	void AdjustDown(vector<int> &v, int cur) {
+		int n = v.size();
+		int i = cur, j = 2 * i + 1;
+		int tmp = v[i];
+		while(j < n) {
+			if(j + 1 < n && v[j + 1] > v[j]) {
+				j++;
+			}
+			if(tmp < v[j]) { //向下调整
+				v[i] = v[j];
+				i = j;
+				j = 2 * i + 1;
+			}
+			else {
+				break;
+			}
+		}
+		v[i] = tmp;
+	}
+public:
+	vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+		vector<int> ans;
+		if(k == 0 || k > input.size()) {
+			return ans;
+		}
+		int i = 0;
+		for(; i < k; i++) {
+			ans.push_back(input[i]);
+		}
+		for(int cur = ans.size() / 2 - 1; cur >= 0; cur--) {
+			AdjustDown(ans, cur);
+		}
+		for(; i < input.size(); i++) {
+			if(input[i] < ans[0]) {
+				swap(ans[0], ans[ans.size() - 1]);
+				ans.pop_back();
+				AdjustDown(ans, 0);
+				ans.push_back(input[i]);
+				for(int cur = ans.size() / 2 - 1; cur >= 0; cur--) {
+					AdjustDown(ans, cur);
+				}
+			}
+		}
+		return ans;
+	}
+
+	vector<int> GetBiggestNumbers_Solution(vector<int> input, int k) {
+		vector<int> ans;
+		if (k == 0 || k > input.size()) {
+			return ans;
+		}
+		int i = 0;
+		for (; i < k; i++) {
+			ans.push_back(input[i]);
+		}
+		for (int cur = ans.size() / 2 - 1; cur >= 0; cur--) {
+			AdjustUp(ans, cur);
+		}
+		for (; i < input.size(); i++) {
+			if (input[i] > ans[0]) {
+				swap(ans[0], ans[ans.size() - 1]);
+				ans.pop_back();
+				AdjustUp(ans, 0);
+				ans.push_back(input[i]);
+				for (int cur = ans.size() / 2 - 1; cur >= 0; cur--) {
+					AdjustUp(ans, cur);
+				}
+			}
+		}
+		return ans;
+	}
+};
+
+//使用priority_queue建立小/大堆
+#include <functional> //向priority_queue中传递greater比较器时需包含
+//仿函数
+struct Compare{
+	bool operator()(const int l, const int r) {
+		return l > r;
+	}
+};
+
+class Solution {
+	typedef bool(*COM)(const int, const int); //函数指针
+	static bool compare(const int left, const int right) { //自制比较器
+		return left > right;
+	}
+public:
+	vector<int> GetBiggestNumbers_Solution(vector<int> input, int k) {
+		vector<int> ans;
+		if (k == 0 || (size_t)k > input.size()) {
+			return ans;
+		}
+
+		priority_queue<int, vector<int>, greater<int>> pq;
+		//priority_queue<int, vector<int>, COM> pq(compare); //函数指针方式
+		//priority_queue<int, vector<int>, Compare> pq; //仿函数方式
+		for (const auto &e : input) {
+			if (pq.size() < (size_t)k) {
+				pq.push(e);
+			}
+			else {
+				if (e > pq.top()) {
+					pq.pop();
+					pq.push(e);
+				}
+			}
+		}
+		while (!pq.empty()) {
+			ans.push_back(pq.top());
+			pq.pop();
+		}
+		//reverse(ans.begin(), ans.end());
+		return ans;
+	}
+};
+
+
+int main()
+{
+	Solution sol;
+	vector<int> input{ 4, 5, 1, 6, 2, 7, 3, 8 };
+	//input = sol.GetLeastNumbers_Solution(input, 4);
+	input = sol.GetBiggestNumbers_Solution(input, 4);
+	for (auto e : input) {
+		cout << e << " ";
+	}
+	cout << endl;
+	return 0;
+}
+
+//快排方式
+class Solution {
+private:
+	//前后指针法
+	int partition_2(vector<int> &input, int left, int right) {
+		int base = input[left];
+		int front = left, back = left + 1;
+		for (int i = back; i <= right; i++) {
+			if (input[i] < base) {
+				if (++front != i) {
+					swap(input[i], input[front]);
+				}
+			}
+		}
+		swap(input[left], input[front]);
+		return front;
+	}
+	//挖坑法
+	int partition_1(vector<int> &input, int left, int right) {
+		int base = input[left];
+		while (left < right) {
+			while (left < right &&input[right] > base) {
+				right--;
+			}
+			input[left] = input[right];
+			while (left < right && input[left] <= base) {
+				left++;
+			}
+			input[right] = input[left];
+		}
+		input[left] = base;
+		return left;
+	}
+public:
+	vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+		vector<int> ans;
+		if (k == 0 || k > input.size()) {
+			return ans;
+		}
+		int left = 0, right = input.size();
+		while (left < right) {
+			int mid = partition_2(input, left, right - 1);
+			if (mid + 1 == k) {
+				return vector<int>({ input.begin(), input.begin() + k });
+			}
+			else if (mid + 1 < k) {
+				left = mid + 1;
+			}
+			else {
+				right = mid;
+			}
+		}
+		return ans;
+	}
+};
+
 //简单错误记录
 struct ErrorLog{
 	string file_name;
@@ -91,7 +341,6 @@ public:
 	}
 };
 
-#if 0
 //乒乓球框
 int main()
 {
