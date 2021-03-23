@@ -8,6 +8,155 @@
 #include <unordered_map>
 using namespace std;
 
+#if 0
+//二叉树层序遍历
+class Solution {
+public:
+	/**
+	*
+	* @param root TreeNode类
+	* @return int整型vector<vector<>>
+	*/
+	vector<vector<int> > levelOrder(TreeNode* root) {
+		// write code here
+		vector<vector<int>> ans;
+		if (!root) {
+			return ans;
+		}
+		queue<TreeNode*> q;
+		q.push(root);
+		while (!q.empty()) {
+			int size = q.size();
+			vector<int> tmp;
+			while (size--) {
+				TreeNode *node = q.front();
+				tmp.push_back(node->val);
+				q.pop();
+				if (node->left) {
+					q.push(node->left);
+				}
+				if (node->right) {
+					q.push(node->right);
+				}
+			}
+			if (!tmp.empty()) {
+				ans.push_back(tmp);
+			}
+		}
+		return ans;
+	}
+};
+
+//反转部分单链表
+class Solution {
+public:
+	/**
+	*
+	* @param head ListNode类 the head
+	* @param l int整型 left
+	* @param r int整型 right
+	* @return ListNode类
+	*/
+	ListNode* reversePartLinkedlist(ListNode* head, int l, int r) {
+		// write code here
+		if (!head || !head->next) {
+			return head;
+		}
+		ListNode *p = head, *q = nullptr; //q是反转前的最后一个节点，也可能是空
+		for (int i = 0; i < l - 1; i++) {
+			q = p;
+			p = p->next;
+		}
+		//此时p在l的位置
+		ListNode *rend = p, *prev = p; //部分反转后的尾节点及首节点
+		ListNode *next = nullptr; //反转中用的辅助节点，记录p的下一个位置
+		p = p->next; //p走到下一个节点，开始部分反转
+		for (int i = l; i < r; i++) {
+			next = p->next;
+			p->next = prev;
+			prev = p;
+			p = next;
+		}
+		//此时p在r+1的位置
+		rend->next = p; //不能是next（可能为nullptr）
+		if (q) { //q存在则连接链表，不存在则说明链表是从开头开始反转的
+			q->next = prev;
+		}
+		else {
+			head = prev;
+		}
+		return head;
+	}
+};
+
+//二叉树前序遍历迭代解法
+class Solution {
+public:
+	vector<int> preorderTraversal(TreeNode* root) {
+		vector<int> ans;
+		if (!root) {
+			return ans;
+		}
+		stack<TreeNode*> s;
+		TreeNode *node = root;
+		while (!s.empty() || node) {
+			while (node) {
+				ans.push_back(node->val);
+				s.push(node);
+				node = node->left;
+			}
+			node = s.top();
+			s.pop();
+			node = node->right;
+		}
+		return ans;
+	}
+};
+
+//合并有序链表
+//迭代解法
+class Solution {
+public:
+	ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+		ListNode *res = new ListNode(-1);
+		ListNode *cur = res;
+		while(l1 && l2) {
+			if(l1->val < l2->val) {
+				cur->next = l1;
+				l1 = l1->next;
+			}
+			else {
+				cur->next = l2;
+				l2 = l2->next;
+			}
+			cur = cur->next;
+		}
+		cur->next = l1 == nullptr ? l2 : l1;
+		return res->next;
+	}
+};
+
+//递归解法
+class Solution {
+public:
+	ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+		if(!l1) {
+			return l2;
+		}
+		else if(!l2) {
+			return l1;
+		}
+		else if(l1->val < l2->val) {
+			l1->next = mergeTwoLists(l1->next, l2);
+			return l1;
+		}
+		else {
+			l2->next = mergeTwoLists(l1, l2->next);
+			return l2;
+		}
+	}
+};
+
 //寻找第K大(通过快排)
 class Solution {
 public:
@@ -46,7 +195,6 @@ public:
 };
 
 /*topk问题*/
-#if 0
 //自建大/小堆
 class Solution {
 private:
