@@ -8,6 +8,76 @@
 #include <unordered_map>
 using namespace std;
 
+#if 0
+//最长回文子串
+//动态规划
+class Solution {
+public:
+	string longestPalindrome(string s) {
+		int len = s.size();
+		if (len == 0 || len == 1) {
+			return s;
+		}
+
+		//dp[i][j]表示s[i]-s[j]的元素是否为回文子串（1为真， 0为假）
+		vector<vector<int>> dp(len, vector<int>(len));
+
+		int max = 1; //最长回文子串的长度
+		int start = 0; //最长回文子串起始位置
+
+		for (int i = 0; i < len; i++) { //初始化状态（一个字符和俩个字符相等的情况都是回文子串）
+			dp[i][i] = 1; //单个字母肯定回文
+			if (i < len - 1 && s[i] == s[i + 1]) { //俩个字母是否回文
+				dp[i][i + 1] = 1;
+				start = i;
+				max = 2;
+			}
+		}
+
+		for (int l = 3; l <= len; l++) { //从长度为3的回文子串开始判断
+			for (int i = 0; i + l - 1 < len; i++) {
+				int j = i + l - 1; //结束标记
+				if (s[i] == s[j] && dp[i + 1][j - 1] == 1) { //状态转移
+					dp[i][j] = 1;
+					start = i;
+					max = l;
+				}
+			}
+		}
+		return s.substr(start, max);
+	}
+};
+
+//中心扩展法
+class Solution {
+private:
+	pair<int, int> expandAroundCentor(const string &s, int l, int r) {
+		while (l >= 0 && r < s.size() && s[l] == s[r]) {
+			l--;
+			r++;
+		}
+		return{ l + 1, r - 1 };
+	}
+public:
+	string longestPalindrome(string s) {
+		int len = s.size();
+		int start = 0, end = 0;
+		for (int i = 0; i < len; i++) {
+			auto[left1, right1] = expandAroundCentor(s, i, i);
+			auto[left2, right2] = expandAroundCentor(s, i, i + 1);
+			if (right1 - left1 > end - start) {
+				start = left1;
+				end = right1;
+			}
+			if (right2 - left2 > end - start) {
+				start = left2;
+				end = right2;
+			}
+		}
+		return s.substr(start, end - start + 1);
+	}
+};
+
 /*
 有一款产品，年化收益率为x%，x为浮点数，精确到小数点后3位，客户买入后就
 开始按日计算利息，每持有一天就获得一天利息，客户卖出后自动结束计息。客
@@ -66,6 +136,7 @@ void caltime(int time, int& year, int& month, int& day)
 	month = stoi(str.substr(4, 2));
 	day = stoi(str.substr(6, 2));
 }
+
 int calday(const int start_year,const int start_month, const int start_day, const int end_year, const int end_month, const int end_day)
 {
 	if(start_year > end_year || (start_year == end_year && start_month > end_month) || (start_year == end_year && start_month == end_month && start_day > end_day))
@@ -170,8 +241,6 @@ int main()
 	return 0;
 }
 
-
-#if 0
 //字符串转整形
 class Solution {
 public:
