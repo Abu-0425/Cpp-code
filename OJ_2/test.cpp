@@ -8,7 +8,117 @@
 #include <unordered_map>
 using namespace std;
 
+//斐波那契数列
+int fib(int n) 
+{
+	vector<int> dp;
+	for (int i = 0; i < n + 1; i++) {
+		if (i == 0) {
+			dp.push_back(0);
+		}
+		else if (i == 1) {
+			dp.push_back(1);
+		}
+		else {
+			dp.push_back((dp[i - 1] + dp[i - 2]) % 1000000007);
+		}
+	}
+	return dp[n];
+}
+
+int main()
+{
+	for (int i = 0; i < 11; i++) {
+		cout << fib(i) << endl;
+	}
+	return 0;
+}
+
 #if 0
+//根据前序和中序还原二叉树
+//递归法1
+class Solution {
+public:
+	//构建哈希映射，保存中序中各节点的位置，以便快速定位到中序中根节点的位置
+	unordered_map<int, int> index;
+	TreeNode* myBuildTree(vector<int>& preorder, vector<int>& inorder, int pre_left, int pre_right, int in_left, int in_right) {
+		if (pre_left > pre_right) { //不能是>=
+			return nullptr;
+		}
+		int pre_root = pre_left; //前序中根节点的位置，即第一个元素
+		int in_root = index[preorder[pre_root]]; //中序中根节点的位置
+
+		//先还原根节点
+		TreeNode *root = new TreeNode(preorder[pre_root]);
+		int left_size = in_root - in_left; //左子树的元素个数
+
+		//递归构建左子树和右子树
+		//左子树：前序中[左边界+1，左边界+左子树元素个数]的元素就对应了中序中[左边界，左边界+左子树元素个数]的元素
+		root->left = myBuildTree(preorder, inorder, pre_left + 1, pre_left + left_size, in_left, in_left + left_size);
+		//右子树：前序中[左边界+1+左子树元素个数，右边界]的元素就对应了中序中[根节点位置+1，右边界]的元素
+		root->right = myBuildTree(preorder, inorder, pre_left + 1 + left_size, pre_right, in_root + 1, in_right);
+		return root;
+	}
+	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+		int n = inorder.size();
+		for (size_t i = 0; i < n; i++) {
+			index[inorder[i]] = i; //键为中序中的元素，值为其在中序中的下标
+		}
+		return myBuildTree(preorder, inorder, 0, n - 1, 0, n - 1);
+	}
+};
+//2
+class Solution {
+private:
+	vector<int> preorder;
+	unordered_map<int, int> index;
+	TreeNode* BuildTree(int pre_root, int in_left, int in_right) {
+		if (in_left > in_right) {
+			return nullptr;
+		}
+		int in_root = index[preorder[pre_root]];
+		TreeNode *root = new TreeNode(preorder[pre_root]);
+		int left_size = in_root - in_left;
+		root->left = BuildTree(pre_root + 1, in_left, in_root - 1);
+		root->right = BuildTree(pre_root + left_size + 1, in_root + 1, in_right);
+		return root;
+	}
+public:
+	TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+		this->preorder = preorder;
+		int n = inorder.size();
+		for (int i = 0; i < n; i++) {
+			index[inorder[i]] = i;
+		}
+		return BuildTree(0, 0, n - 1);
+	}
+};
+
+//二维数组的查找
+class Solution {
+public:
+	bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+		if(matrix.empty()) {
+			return false;
+		}
+		int row = matrix.size();
+		int col = matrix[0].size();
+		int i = 0, j = col - 1;
+		while(i < row && j >= 0) {
+			if(target == matrix[i][j]) {
+				return true;
+			}
+			else if(target > matrix[i][j]) {
+				i++;
+			}
+			else {
+				j--;
+			}
+		}
+		return false;
+	}
+};
+
 //最长回文子串
 //动态规划
 class Solution {
