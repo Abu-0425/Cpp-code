@@ -8,6 +8,49 @@
 #include <unordered_map>
 using namespace std;
 
+//旋转数组的最小数字
+class Solution {
+public:
+	int minArray(vector<int>& numbers) {
+		int size = numbers.size();
+		int left = 0, right = size - 1;
+		while (left < right) {
+			int mid = left + (right - left) / 2;
+			if (numbers[mid] < numbers[right]) {
+				right = mid;
+			}
+			else if (numbers[mid] > numbers[right]) {
+				left = mid + 1;
+			}
+			else {
+				right--;
+			}
+		}
+		return numbers[left];
+	}
+};
+
+//青蛙跳台阶问题
+class Solution {
+public:
+	int numWays(int n) {
+		if(n == 0) {
+			return 1;
+		}
+		if(n <= 2) {
+			return n; //一层或两层
+		}
+		int a = 1, b = 2, sum; //a保存f(n - 2), b保存f(n - 1), sum保存f(n)
+		for(int i = 3; i <= n; i++) {
+			sum = (a + b) % 1000000007;
+			a = b;
+			b = sum;
+		}
+		return sum;
+	}
+};
+
+#if 0
 //斐波那契数列
 int fib(int n) 
 {
@@ -34,7 +77,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //根据前序和中序还原二叉树
 //递归法1
 class Solution {
