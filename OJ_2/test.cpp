@@ -8,6 +8,58 @@
 #include <unordered_map>
 using namespace std;
 
+//丑数
+class Solution {
+public:
+	bool isUgly(int n) {
+		if(n <= 0) {
+			return false;
+		}
+		while(1) {
+			if(n == 1) {
+				return true;
+			}
+			else if(n % 2 == 0) {
+				n /= 2;
+			}
+			else if(n % 3 == 0) {
+				n /= 3;
+			}
+			else if(n % 5 == 0) {
+				n /= 5;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+};
+
+//丑数2
+class Solution {
+public:
+	int nthUglyNumber(int n) {
+		vector<int> dp(n + 1);
+		dp[1] = 1;
+		int p2 = 1, p3 = 1, p5 = 1;
+		for(int i = 2; i < n + 1; i++) {
+			int num1 = dp[p2] * 2, num2 = dp[p3] * 3, num3 = dp[p5] * 5;
+			dp[i] = min(min(num1, num2), num3);
+			if(dp[i] == num1) {
+				p2++;
+			}
+			if(dp[i] == num2) {
+				p3++;
+			}
+			if(dp[i] == num3) {
+				p5++;
+			}
+		}
+		return dp[n];
+	}
+};
+
+#if 0
 //旋转数组的最小数字
 class Solution {
 public:
@@ -50,7 +102,6 @@ public:
 	}
 };
 
-#if 0
 //斐波那契数列
 int fib(int n) 
 {
