@@ -8,6 +8,48 @@
 #include <unordered_map>
 using namespace std;
 
+//百度笔试--剧组
+vector<int> ans;
+
+void Solution(vector<int> &partner, vector<int> &juzu) 
+{
+	for(size_t i = 0; i < partner.size(); i++) {
+		int cnt = 0;
+		for(size_t j = 0; j < juzu.size(); j++) {
+			if(partner[i] <= juzu[j]) {
+				cnt++;
+			}
+		}
+		ans.push_back(cnt);
+	}
+}
+
+int main()
+{
+	int T;
+	cin >> T;
+	while(T--) {
+		int n, m;
+		cin >> n >> m;
+		vector<int> partner(n);
+		vector<int> juzu(m);
+		for(int &p : partner) {
+			cin >> p;
+		}
+		for(int &j : juzu) {
+			cin >> j;
+		}
+		Solution(partner, juzu);
+		for(int &a : ans) {
+			cout << a << ' ';
+		}
+		cout << endl;
+		ans.clear();
+	}
+	return 0;
+}
+
+#if 0
 //丑数
 class Solution {
 public:
@@ -59,7 +101,6 @@ public:
 	}
 };
 
-#if 0
 //旋转数组的最小数字
 class Solution {
 public:
