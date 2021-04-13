@@ -8,9 +8,9 @@
 #include <unordered_map>
 using namespace std;
 
-#if 0
 //百度笔试--剧组
 vector<int> ans;
+
 
 void Solution(vector<int> &partner, vector<int> &juzu) 
 {
@@ -50,6 +50,7 @@ int main()
 	return 0;
 }
 
+#if 0
 //丑数
 class Solution {
 public:
