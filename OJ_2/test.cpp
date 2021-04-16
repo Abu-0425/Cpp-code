@@ -8,10 +8,63 @@
 #include <unordered_map>
 using namespace std;
 
+
+//二叉树的镜像
+class Solution {
+public:
+	TreeNode* mirrorTree(TreeNode* root) {
+		if(!root) {
+			return nullptr;
+		}
+		TreeNode *tmp = mirrorTree(root->left);
+		root->left = mirrorTree(root->right);
+		root->right = tmp;
+		return root;
+	}
+};
+
+//二叉树的子结构
+class Solution {
+private:
+	bool judgeCur(TreeNode *a, TreeNode *b) {
+		if(b == nullptr) {
+			return true;
+		}
+		if(a == nullptr || a->val != b->val) {
+			return false;
+		}
+		return judgeCur(a->left, b->left) && judgeCur(a->right, b->right);
+	}
+public:
+	bool isSubStructure(TreeNode* A, TreeNode* B) {
+		return (A != nullptr && B != nullptr) && (judgeCur(A, B) || isSubStructure(A->left, B) || isSubStructure(A->right, B));
+	}
+};
+
+//链表的倒数第k个节点
+class Solution {
+public:
+	ListNode* getKthFromEnd(ListNode* head, int k) {
+		ListNode *slow = head, *fast = head;
+		while(k--) {
+			if(fast) {
+				fast = fast->next;
+			}
+			else {
+				return nullptr;
+			}
+		}
+		while(fast) {
+			slow = slow->next;
+			fast = fast->next;
+		}
+		return slow;
+	}
+};
+
+#if 0
 //百度笔试--剧组
 vector<int> ans;
-
-
 void Solution(vector<int> &partner, vector<int> &juzu) 
 {
 	for(size_t i = 0; i < partner.size(); i++) {
@@ -50,7 +103,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //丑数
 class Solution {
 public:
