@@ -9,6 +9,7 @@
 using namespace std;
 
 
+#if 0
 //二叉树的镜像
 class Solution {
 public:
@@ -62,7 +63,6 @@ public:
 	}
 };
 
-#if 0
 //百度笔试--剧组
 vector<int> ans;
 void Solution(vector<int> &partner, vector<int> &juzu) 
