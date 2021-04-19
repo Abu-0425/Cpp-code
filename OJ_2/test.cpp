@@ -8,6 +8,45 @@
 #include <unordered_map>
 using namespace std;
 
+//调整数组顺序使奇数位于偶数前面
+class Solution {
+public:
+	vector<int> exchange(vector<int>& nums) {
+		int left = 0, right = nums.size() - 1;
+		while (left < right) {
+			if ((nums[left] % 2) != 0) {
+				left++;
+				continue;
+			}
+			if ((nums[right] % 2) == 0) {
+				right--;
+				continue;
+			}
+			swap(nums[left++], nums[right--]);
+		}
+		return nums;
+	}
+};
+
+//删除链表中的节点
+class Solution {
+public:
+	ListNode* deleteNode(ListNode* head, int val) {
+		ListNode *cur = head, *prev = nullptr;
+		while(cur) {
+			if(cur->val == val) {
+				break;
+			}
+			prev = cur;
+			cur = cur->next;
+		}
+		if(prev == nullptr) {
+			return head->next;
+		}
+		prev->next = cur->next;
+		return head;
+	}
+};
 
 #if 0
 //二叉树的镜像
