@@ -8,6 +8,29 @@
 #include <unordered_map>
 using namespace std;
 
+#if 0
+//俩数之和
+class Solution {
+public:
+	/**
+	*
+	* @param numbers int整型vector
+	* @param target int整型
+	* @return int整型vector
+	*/
+	vector<int> twoSum(vector<int>& numbers, int target) {
+		// write code here
+		unordered_map<int, int> index;
+		for (int i = 0; i < numbers.size(); i++) {
+			if (index.count(target - numbers[i])) {
+				return{ index[target - numbers[i]], i + 1 };
+			}
+			index[numbers[i]] = i + 1;
+		}
+		return{};
+	}
+};
+
 //调整数组顺序使奇数位于偶数前面
 class Solution {
 public:
@@ -48,7 +71,6 @@ public:
 	}
 };
 
-#if 0
 //二叉树的镜像
 class Solution {
 public:
