@@ -8,6 +8,32 @@
 #include <unordered_map>
 using namespace std;
 
+//礼物的最大价值
+class Solution {
+public:
+	int maxValue(vector<vector<int>>& grid) {
+		int row = grid.size();
+		int col = grid[0].size();
+		if(row == 0 || col == 0) {
+			return 0;
+		}
+		vector<vector<int>> dp(row, vector<int>(col, 0));
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++) {
+				int up = 0, left = 0; //上边和左边的元素
+				if(i > 0) {
+					up = dp[i - 1][j];
+				}
+				if(j > 0) {
+					left = dp[i][j - 1];
+				}
+				dp[i][j] = max(up, left) + grid[i][j];
+			}
+		}
+		return dp[row - 1][col - 1];
+	}
+};
+
 #if 0
 //俩数之和
 class Solution {
