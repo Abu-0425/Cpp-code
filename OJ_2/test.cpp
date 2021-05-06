@@ -8,6 +8,35 @@
 #include <unordered_map>
 using namespace std;
 
+
+//旋转链表
+//先成环，再断开
+class Solution {
+public:
+	ListNode* rotateRight(ListNode* head, int k) {
+		if (!head || !head->next) {
+			return head;
+		}
+		int len = 1; //统计链表长度
+		ListNode *p = head;
+		while (p->next) {
+			len++;
+			p = p->next;
+		}
+		p->next = head; //闭合链表
+		k %= len; //取模去重
+		p = head;
+		//寻找断开的地方
+		while (--len != k) {
+			p = p->next;
+		}
+		//断开并重新连接
+		head = p->next;
+		p->next = nullptr;
+		return head;
+	}
+};
+
 //礼物的最大价值
 class Solution {
 public:
@@ -27,7 +56,7 @@ public:
 				if(j > 0) {
 					left = dp[i][j - 1];
 				}
-				dp[i][j] = max(up, left) + grid[i][j];
+				dp[i][j] = max(up, left) + grid[i][j]; //状态转移
 			}
 		}
 		return dp[row - 1][col - 1];
