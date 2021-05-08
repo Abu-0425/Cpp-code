@@ -8,7 +8,49 @@
 #include <unordered_map>
 using namespace std;
 
+//二进制插入
+class BinInsert {
+public:
+	int binInsert(int n, int m, int j, int i) {
+		// write code here
+		n |= (m << j);
+		return n;
+	}
+};
 
+//查找组成—个偶数最接近的两个素数
+bool isSu(int n)
+{
+	for(int i = 2; i <= sqrt(n); i++) {
+		if(n % i == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+int main()
+{
+	int n;
+	while(cin >> n) {
+		int m1 = n /2;
+		int m2 = 0;
+		while(1) {
+			if(isSu(m1)) {
+				m2 = n - m1;
+				if(isSu(m2)) {
+					break;
+				}
+			}
+			m1--;
+		}
+		cout << m1 << endl;
+		cout << m2 << endl;
+	}
+	return 0;
+}
+
+#if 0
 //旋转链表
 //先成环，再断开
 class Solution {
@@ -63,7 +105,6 @@ public:
 	}
 };
 
-#if 0
 //俩数之和
 class Solution {
 public:
