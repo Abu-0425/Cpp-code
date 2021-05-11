@@ -8,6 +8,57 @@
 #include <unordered_map>
 using namespace std;
 
+
+#if 0
+//连续最大和
+int main()
+{
+	int n;
+	while (cin >> n) {
+		vector<int> arr(n);
+		for (int &num : arr) {
+			cin >> num;
+		}
+		int tmp = arr[0];
+		int ans = arr[0];
+		for (int i = 1; i < arr.size(); i++) {
+			tmp += arr[i];
+			tmp = max(tmp, arr[i]);
+			ans = max(ans, tmp);
+		}
+		cout << ans << endl;
+	}
+	return 0;
+}
+
+//数组中出现次数超过一半的数字(摩尔投票)
+class Gift {
+public:
+	int getValue(vector<int> gifts, int n) {
+		int vote = 1;
+		int target = gifts[0];
+		for(size_t i = 1; i < gifts.size(); i++) {
+			if(vote == 0) {
+				target = gifts[i];
+				vote = 1;
+			}
+			else if(gifts[i] == target){
+				vote++;
+			}
+			else {
+				vote--;
+			}
+		}
+		int cnt = 0;
+		for(size_t i = 0; i < gifts.size(); i++) {
+			if(target == gifts[i]) {
+				cnt++;
+			}
+		}
+		return cnt > gifts.size() / 2 ? target : 0;
+	}
+};
+
 //二进制插入
 class BinInsert {
 public:
@@ -50,7 +101,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //旋转链表
 //先成环，再断开
 class Solution {
