@@ -5,11 +5,86 @@
 #include <stack>
 #include <queue>
 #include <iomanip>
+#include <list>
+#include <set>
+#include <functional>
 #include <unordered_map>
 using namespace std;
 
-
 #if 0
+//查找第k小的元素
+int main()
+{
+	priority_queue<int, vector<int>, greater<int>> pq; //小堆
+	set<int> s; //集合，用于去重
+	int n;
+	while (cin >> n) {
+		while (!pq.empty()) {
+			pq.pop();
+		}
+		s.clear();
+		vector<int> arr(n);
+		for (int &num : arr) {
+			cin >> num;
+			pq.push(num);
+		}
+		int k, cnt = 0;
+		cin >> k;
+		while (cnt < k && !pq.empty()) {
+			int val = pq.top();
+			if (!s.count(val)) {
+				s.insert(val);
+				cnt++;
+			}
+			if (cnt == k) {
+				cout << val;
+				break;
+			}
+			pq.pop();
+		}
+	}
+	return 0;
+}
+
+//设计LRU缓存系统
+int main()
+{
+	unordered_map<int, int> ump;
+	list<int> lt;
+	int n, k;
+	cin >> n >> k;
+	vector<vector<int>> vv(n, vector<int>(3, 0));
+	for(int i = 0; i < n; i++) {
+		cin >> vv[i][0];
+		if (vv[i][0] == 1) {
+			cin >> vv[i][1] >> vv[i][2];
+		}
+		else {
+			cin >> vv[i][1];
+		}
+	}
+	for(auto &v : vv) {
+		if(v[0] == 1) { //set
+			ump[v[1]] = v[2];
+			lt.push_back(v[1]);
+			if(lt.size() > k) {
+				ump.erase(lt.front());
+				lt.erase(lt.begin());
+			}
+		}
+		else { //get
+			if(!ump.count(v[1])) {
+				cout << -1 << endl;
+				continue;
+			}
+			cout << ump[v[1]] << endl;
+			lt.remove(v[1]);
+			lt.push_back(v[1]);
+		}
+	}
+	return 0;
+}
+
 //连续最大和
 int main()
 {
