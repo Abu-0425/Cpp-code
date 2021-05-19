@@ -1,8 +1,68 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstring>
 using namespace std;
 
+//¹é²¢ÅÅÐò
+void _MergeSort(int *arr, int left, int right, int *tmp)
+{
+	if (left >= right) {
+		return;
+	}
+	int mid = (left + right) / 2;
+
+	_MergeSort(arr, left, mid, tmp);
+	_MergeSort(arr, mid + 1, right, tmp);
+
+	int begin1, end1, begin2, end2;
+	begin1 = left, end1 = mid, begin2 = mid + 1, end2 = right;
+	int i = 0;
+	while (begin1 <= end1 && begin2 <= end2) {
+		if (arr[begin1] <= arr[begin2]) {
+			tmp[i++] = arr[begin1++];
+		}
+		else {
+			tmp[i++] = arr[begin2++];
+		}
+	}
+	while (begin1 <= end1) {
+		tmp[i++] = arr[begin1++];
+	}
+	while (begin2 <= end2) {
+		tmp[i++] = arr[begin2++];
+	}
+	memcpy(arr + left, tmp, (right - left + 1) * sizeof(int));
+}
+
+void MergeSort(int *arr, int n)
+{
+	int *tmp = (int *)malloc(sizeof(int)* n);
+	if (tmp == NULL) {
+		return;
+	}
+
+	_MergeSort(arr, 0, n - 1, tmp);
+
+	free(tmp);
+	tmp = nullptr;
+}
+
+int main()
+{
+	int arr[] = {6, 3, 9, 5, 2, 4, 1, 8, 7};
+	int n = sizeof(arr) / sizeof(arr[0]);
+
+	MergeSort(arr, n);
+
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << ' ';
+	}
+	cout << endl;
+	return 0;
+}
+
+#if 0
 //×Ö·û´®Í¨ÅäÎÊÌâ
 bool canMatch(const char *wcc, const char *dst)
 {
@@ -54,3 +114,4 @@ int main()
 	}
 	return 0;
 }
+#endif
