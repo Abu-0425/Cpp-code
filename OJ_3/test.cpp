@@ -4,6 +4,32 @@
 #include <cstring>
 using namespace std;
 
+//链表倒数第k个节点
+class Solution {
+public:
+	ListNode* removeNthFromEnd(ListNode* head, int n) {
+		ListNode *slow = head, *fast = head;
+		ListNode *prev = nullptr;
+		while(n--) {
+			fast = fast->next;
+		}
+		while(fast) {
+			fast = fast->next;
+			prev = slow;
+			slow = slow->next;
+		}
+
+		if(prev) {
+			prev->next = slow->next;
+			return head;
+		}
+		else {
+			return slow->next;
+		}
+	}
+};
+
+#if 0
 //整数的平方根
 class Solution {
 public:
@@ -81,7 +107,6 @@ int main()
 	return 0;
 }
 
-#if 0
 //字符串通配问题
 bool canMatch(const char *wcc, const char *dst)
 {
