@@ -4,7 +4,37 @@
 #include <cstring>
 using namespace std;
 
-//链表倒数第k个节点
+//二叉树中和为某一值的路径
+class Solution {
+private:
+	vector<int> path;
+	vector<vector<int>> ans;
+	void dfs(TreeNode *cur, int target) {
+		if(cur == nullptr) {
+			return;
+		}
+		else {
+			path.push_back(cur->val);
+			target -= cur->val;
+			if(target != 0 || cur->left != nullptr || cur->right != nullptr) {
+				dfs(cur->left, target);
+				dfs(cur->right, target);
+			}
+			else {
+				ans.push_back(path);
+			}
+			path.pop_back();
+		}
+	}
+public:
+	vector<vector<int>> pathSum(TreeNode* root, int target) {
+		dfs(root, target);
+		return ans;
+	}
+};
+
+#if 0
+//删除链表倒数第k个节点
 class Solution {
 public:
 	ListNode* removeNthFromEnd(ListNode* head, int n) {
@@ -29,7 +59,6 @@ public:
 	}
 };
 
-#if 0
 //整数的平方根
 class Solution {
 public:
