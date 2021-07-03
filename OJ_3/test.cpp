@@ -2,7 +2,151 @@
 #include <vector>
 #include <string>
 #include <cstring>
+#include <cmath>
 using namespace std;
+
+//蛋糕的最大数量
+class Solution {
+public:
+	int maxIceCream(vector<int>& costs, int coins) {
+		vector<int> table(100001);
+		for (const int &cos : costs) {
+			table[cos]++;
+		}
+
+		int cnt = 0;
+		for (int i = 1; i <= 100000; i++) {
+			if (coins >= i) {
+				int curCnt = min(table[i], coins / i);
+				cnt += curCnt;
+				coins -= curCnt * i;
+			}
+			else {
+				break;
+			}
+		}
+		return cnt;
+	}
+};
+
+//一次编辑
+class Solution {
+public:
+	bool oneEditAway(string first, string second) {
+		int len1 = first.size(), len2 = second.size();
+		//长度差大于1
+		if (abs(len1 - len2) > 1) {
+			return false;
+		}
+		//长度差相等
+		else if (len1 == len2) {
+			int cnt = 0;
+			for (int i = 0; i < len1; i++) {
+				if (first[i] != second[i]) {
+					cnt++;
+				}
+			}
+			return cnt <= 1;
+		}
+		//长度差为1
+		else {
+			//使first为较短串
+			if (len1 > len2) {
+				swap(first, second);
+			}
+			int i = 0;
+			for (; i < first.size(); i++) {
+				if (first[i] != second[i]) {
+					break;
+				}
+			}
+			first.insert(first.begin() + i, second[i]);
+		}
+		return first == second;
+	}
+};
+
+//螺旋矩阵2
+class Solution {
+public:
+	vector<vector<int>> generateMatrix(int n) {
+		int curData = 1;
+		vector<vector<int>> matrix(n, vector<int>(n));
+		int left = 0, right = n - 1, top = 0, bottom = n - 1;
+		while(left <= right && top <= bottom) {
+			//上边的行
+			for(int col = left; col <= right; col++) {
+				matrix[top][col] = curData;
+				curData++;
+			}
+
+			//右侧的列
+			for(int row = top + 1; row <= bottom; row++) {
+				matrix[row][right] = curData;
+				curData++;
+			}
+
+			if(left < right && top < bottom) {
+				//下边的行
+				for(int col = right - 1; col > left; col--) {
+					matrix[bottom][col] = curData;
+					curData++;
+				}
+
+				//左侧的列
+				for(int row = bottom; row > top; row--) {
+					matrix[row][left] = curData;
+					curData++;
+				}
+			}
+
+			//更新边界
+			left++;
+			right--;
+			top++;
+			bottom--;
+		}
+		return matrix;
+	}
+};
+
+#if 0
+//纯质数
+bool isZhi(int n)
+{
+	if (n == 1 || n == 0) {
+		return false;
+	}
+	for (int i = 2; i <= sqrt(n); i++) {
+		if (n % i == 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool isChuZhi(int n)
+{
+	while (n) {
+		if (!isZhi(n % 10)) {
+			return false;
+		}
+		n /= 10;
+	}
+	return true;
+}
+
+int main()
+{
+	int cnt = 0;
+	for (int i = 2; i < 20210605; i++) {
+		if (isZhi(i) && isChuZhi(i)) {
+			cnt++;
+		}
+	}
+	cout << cnt << endl;
+	return 0;
+}
 
 //二叉树中和为某一值的路径
 class Solution {
@@ -33,7 +177,6 @@ public:
 	}
 };
 
-#if 0
 //删除链表倒数第k个节点
 class Solution {
 public:
