@@ -5,6 +5,105 @@
 #include <cmath>
 using namespace std;
 
+//分割链表
+class Solution {
+public:
+	ListNode* partition(ListNode* head, int x) {
+		if(!head || !head->next) {
+			return head;
+		}
+		ListNode *lessHead, *lessTail, *greaterHead, *greaterTail;
+		lessHead = lessTail = new ListNode(-1);
+		greaterHead = greaterTail = new ListNode(-1);
+		ListNode *cur = head;
+		while(cur) {
+			if(cur->val < x) {
+				lessTail->next = cur;
+				lessTail = cur;
+			}
+			else {
+				greaterTail->next = cur;
+				greaterTail = cur;
+			}
+			cur = cur->next;
+		}
+		lessTail->next = greaterHead->next;
+		greaterTail->next = nullptr;
+		return lessHead->next;
+	}
+};
+
+//合法二叉搜索树
+//法一：递归
+class Solution {
+private:
+	bool IsValidBST(TreeNode *t, long long lower, long long upper) {
+		if (!t) {
+			return true;
+		}
+		else if (t->val <= lower || t->val >= upper) {
+			return false;
+		}
+		return IsValidBST(t->left, lower, t->val) && IsValidBST(t->right, t->val, upper);
+	}
+public:
+	bool isValidBST(TreeNode* root) {
+		return IsValidBST(root, LONG_MIN, LONG_MAX);
+	}
+};
+
+//法二：中序遍历
+class Solution {
+public:
+	bool isValidBST(TreeNode* root) {
+		stack<TreeNode*> st;
+		long long pre = LONG_MIN;
+		while (!st.empty() || root != nullptr) {
+			while (root) {
+				st.push(root);
+				root = root->left;
+			}
+			root = st.top();
+			st.pop();
+			if (root->val <= pre) {
+				return false;
+			}
+			pre = root->val;
+			root = root->right;
+		}
+		return true;
+	}
+};
+
+//环路检测
+class Solution {
+public:
+	ListNode *detectCycle(ListNode *head) {
+		if(!head || !head->next) {
+			return nullptr;
+		}
+		ListNode *slow, *fast;
+		slow = fast = head;
+		while(fast && fast->next) {
+			slow = slow->next;
+			fast = fast->next->next;
+			if(slow == fast) {
+				break;
+			}
+		}
+		if(fast == nullptr || fast->next == nullptr) {
+			return nullptr; //无环
+		}
+		slow = head;
+		while(slow != fast) {
+			slow = slow->next;
+			fast = fast->next;
+		}
+		return slow;
+	}
+};
+
+#if 0
 //蛋糕的最大数量
 class Solution {
 public:
@@ -110,7 +209,6 @@ public:
 	}
 };
 
-#if 0
 //纯质数
 bool isZhi(int n)
 {
