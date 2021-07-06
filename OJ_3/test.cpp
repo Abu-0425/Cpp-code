@@ -5,6 +5,28 @@
 #include <cmath>
 using namespace std;
 
+//变位词组
+class Solution {
+public:
+	vector<vector<string>> groupAnagrams(vector<string>& strs) {
+		int n = strs.size();
+		vector<vector<string>> res;
+		unordered_map<string, vector<string>> u_map;
+		for(int i = 0; i < n; i++) {
+			string tmp = strs[i];
+			sort(tmp.begin(), tmp.end());
+			u_map[tmp].push_back(strs[i]);
+		}
+		auto it = u_map.begin();
+		while(it != u_map.end()) {
+			res.push_back(it->second);
+			++it;
+		}
+		return res;
+	}
+};
+
+#if 0
 //分割链表
 class Solution {
 public:
@@ -103,7 +125,6 @@ public:
 	}
 };
 
-#if 0
 //蛋糕的最大数量
 class Solution {
 public:
