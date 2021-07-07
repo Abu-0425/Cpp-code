@@ -5,7 +5,55 @@
 #include <cmath>
 using namespace std;
 
+// 按摩师
+class Solution {
+public:
+	int massage(vector<int>& nums) {
+		int n = (int)nums.size();
+		if (0 == n) {
+			return 0;
+		}
+		if (1 == n) {
+			return nums[0];
+		}
 
+		int dp0 = nums[0];
+		int dp1 = max(nums[0], nums[1]);
+		for (int i = 2; i < n; i++) {
+			int d0 = max(dp0, dp1);
+			int d1 = dp0 + nums[i];
+
+			dp0 = d0;
+			dp1 = d1;
+		}
+		return max(dp0, dp1);
+	}
+};
+
+// T9键盘
+class Solution {
+public:
+	vector<string> getValidT9Words(string num, vector<string>& words) {
+		vector<char> map = { '2', '2', '2', '3', '3', '3', '4', '4', '4',
+			'5', '5', '5', '6', '6', '6', '7', '7', '7',
+			'7', '8', '8', '8', '9', '9', '9', '9' };
+		vector<string> res;
+		int n = num.size();
+		for (auto &w : words) {
+			for (int i = 0; i < n; i++) {
+				if (map[w[i] - 'a'] != num[i]) {
+					break;
+				}
+				if (i + 1 == n) {
+					res.push_back(w);
+				}
+			}
+		}
+		return res;
+	}
+};
+
+#if 0
 //变位词组
 class Solution {
 public:
@@ -27,7 +75,6 @@ public:
 	}
 };
 
-#if 0
 //分割链表
 class Solution {
 public:
